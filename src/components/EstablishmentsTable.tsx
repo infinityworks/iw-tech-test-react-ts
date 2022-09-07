@@ -13,11 +13,14 @@ export const EstablishmentsTable: React.FC<{
 }> = ({ establishments }) => {
   return (
     <table>
-      <tbody>
+      <thead>
         <tr>
           <th style={headerStyle}>Business Name</th>
           <th style={headerStyle}>Rating Value</th>
         </tr>
+      </thead>
+      
+      <tbody>
         {establishments &&
           establishments?.map(
             (
