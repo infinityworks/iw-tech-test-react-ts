@@ -1,9 +1,11 @@
+import { Establishment } from "../api/ratingsAPI";
+
 const tableDataStyle: { [key: string]: string | number } = {
   fontSize: "20px"
 };
 
 export const EstablishmentsTableRow: React.FC<{
-  establishment: { [key: string]: string } | null | undefined;
+  establishment: Establishment | null | undefined;
 }> = ({ establishment }) => {
   return (
     <tr>

@@ -1,7 +1,12 @@
 import { useState, useEffect } from "react";
 import { EstablishmentsTable } from "./EstablishmentsTable";
 import { EstablishmentsTableNavigation } from "./EstablishmentsTableNavigation";
-import { getEstablishmentRatings } from "../api/ratingsAPI";
+import {
+  getEstablishmentRatings,
+  getFilteredEstablishmentRatings,
+  Establishment
+} from "../api/ratingsAPI";
+import { EstablishmentAuthorityFilter } from "./EstablishmentAuthorityFilter";
 
 const tableStyle: { [key: string]: string | number } = {
   background: "rgba(51, 51, 51, 0.9)",
@@ -9,7 +14,7 @@ const tableStyle: { [key: string]: string | number } = {
   width: "max-content",
   marginLeft: "50px",
   color: "white",
-  minHeight: "400px",
+  minHeight: "440px",
   minWidth: "550px",
   display: "flex",
   flexDirection: "column"
@@ -23,38 +28,42 @@ const loaderStyle: { [key: string]: string | number } = {
 };
 
 export const PaginatedEstablishmentsTable = () => {
+  const [establishments, setEstablishments] = useState<Array<Establishment>>([]);
   const [error, setError] = useState<{ message: string; [key: string]: string }>();
-  const [establishments, setEstablishments] = useState<{ [key: string]: string }[]>([]);
   const [pageNum, setPageNum] = useState<number>(1);
   const [isLoading, setLoading] = useState<boolean>(false);
   const [pageCount] = useState(100);
+  const [authorityId, setAuthorityId] = useState<string>('');
 
   useEffect(() => {
-    fetchEstablishmentRatingsPage(pageNum);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    async function fetchEstablishmentRatingsPage(page: number, authorityId: string): Promise<void> {
+      try {
+        setLoading(true);
+        setEstablishments([]);
 
-  function handlePreviousPage() {
-    pageNum > 1 && setPageNum(pageNum - 1);
-    fetchEstablishmentRatingsPage(pageNum);
-  }
+        let result;
+        if (authorityId) {
+          result = await getFilteredEstablishmentRatings(pageNum, authorityId);
+        } else {
+          result = await getEstablishmentRatings(pageNum);
+        }
 
-  function handleNextPage() {
-    pageNum < pageCount && setPageNum(pageNum + 1);
-    fetchEstablishmentRatingsPage(pageNum);
-  }
+        setEstablishments(result.establishments);
+        setError(undefined);
+      } catch(error: any) {
+        setError(error);
+      } finally {
+        setLoading(false);
+      }
+    }
 
-  async function fetchEstablishmentRatingsPage(page: number): Promise<void> {
-    try {
-      setLoading(true);
-      setEstablishments([]);
+    fetchEstablishmentRatingsPage(pageNum, authorityId);
+  }, [pageNum, authorityId]);
 
-      const result = await getEstablishmentRatings(pageNum);
-      setEstablishments(result.establishments);
-    } catch(error: any) {
-      setError(error);
-    } finally {
-      setLoading(false);
+  function handleFilterChange(filter: string) {
+    if (filter !== authorityId) {
+      setAuthorityId(filter);
+      setPageNum(1);
     }
   }
 
@@ -64,19 +73,25 @@ export const PaginatedEstablishmentsTable = () => {
     return (
       <div style={tableStyle}>
         <h2>Food Hygiene Ratings</h2>
+
+        <EstablishmentAuthorityFilter
+          onChange={handleFilterChange}
+        />
+
         <EstablishmentsTable
           establishments={establishments}
         />
 
         {
-          isLoading && <span style={loaderStyle}>Loading...</span>
+          isLoading && (
+            <span style={loaderStyle}>Loading...</span>
+          )
         }
 
         <EstablishmentsTableNavigation
           pageNum={pageNum}
           pageCount={pageCount}
-          onPreviousPage={handlePreviousPage}
-          onNextPage={handleNextPage}
+          updatePage={setPageNum}
         />
       </div>
     );
