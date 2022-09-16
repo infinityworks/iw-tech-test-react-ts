@@ -7,6 +7,31 @@ export type Establishment = {
   RatingValue: string | number;
 }
 
+export type EstablishmentDetail = {
+  AddressLine1: string;
+  AddressLine2: string;
+  AddressLine3: string;
+  AddressLine4: string;
+  BusinessName: string;
+  BusinessType: string;
+  BusinessTypeID: number;
+  ChangesByServerID: number;
+  Distance: number;
+  FHRSID: number;
+  LocalAuthorityBusinessID: string;
+  LocalAuthorityCode: string;
+  LocalAuthorityEmailAddress: string;
+  LocalAuthorityName: string;
+  LocalAuthorityWebSite: string;
+  NewRatingPending: boolean;
+  Phone: string;
+  PostCode: string;
+  RatingDate: string;
+  RatingKey: string;
+  RatingValue: string;
+  RightToReply: string;
+}
+
 export type EstablishmentsType = {
   establishments: Array<Establishment>;
   meta: {
@@ -58,6 +83,13 @@ export function getFilteredEstablishmentRatings(pageNum: number, authorityId: st
 export function getAuthorities() {
   return fetch(
     `http://api.ratings.food.gov.uk/Authorities/basic`,
+    { headers: commonApiHeaders }
+  ).then((res) => res.json());
+}
+
+export function getEstablishmentDetail(establishmentId: number) {
+  return fetch(
+    `http://api.ratings.food.gov.uk/Establishments/${establishmentId}`,
     { headers: commonApiHeaders }
   ).then((res) => res.json());
 }

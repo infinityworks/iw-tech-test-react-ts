@@ -2,14 +2,14 @@ const buttonStyle = {
   margin: "0 5px",
 };
 
-type EstablishmentsTableNavigationType = {
+type EstablishmentsNavigationType = {
   pageNum: number;
   pageCount: number;
   updatePage: (pageNum: number) => void;
 };
 
-export const EstablishmentsTableNavigation = (
-  props: EstablishmentsTableNavigationType
+export const EstablishmentsNavigation = (
+  props: EstablishmentsNavigationType
 ) => {
   const { pageNum, pageCount, updatePage } = props;
 

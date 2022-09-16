@@ -1,33 +1,20 @@
 import { useState, useEffect } from "react";
-import { EstablishmentsTable } from "./EstablishmentsTable";
-import { EstablishmentsTableNavigation } from "./EstablishmentsTableNavigation";
+import { Table } from "../../components/Table";
+import { EstablishmentsNavigation } from "./EstablishmentsNavigation";
 import {
   getEstablishmentRatings,
   getFilteredEstablishmentRatings,
   Establishment
-} from "../api/ratingsAPI";
+} from "../../api/ratingsAPI";
 import { EstablishmentAuthorityFilter } from "./EstablishmentAuthorityFilter";
+import Loader from "../../components/Loader";
+import { EstablishmentListRow } from "./EstablishmentListRow"
 
-const tableStyle: { [key: string]: string | number } = {
-  background: "rgba(51, 51, 51, 0.9)",
-  padding: "10px",
-  width: "max-content",
-  marginLeft: "50px",
-  color: "white",
-  minHeight: "440px",
-  minWidth: "550px",
-  display: "flex",
-  flexDirection: "column"
+type EstablishmentListProps = {
+  onEstablishmentClick: (pageNum: number) => void;
 };
 
-const loaderStyle: { [key: string]: string | number } = {
-  flex: 1,
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center"
-};
-
-export const PaginatedEstablishmentsTable = () => {
+export const EstablishmentListView = ({ onEstablishmentClick }: EstablishmentListProps) => {
   const [establishments, setEstablishments] = useState<Array<Establishment>>([]);
   const [error, setError] = useState<{ message: string; [key: string]: string }>();
   const [pageNum, setPageNum] = useState<number>(1);
@@ -43,9 +30,9 @@ export const PaginatedEstablishmentsTable = () => {
 
         let result;
         if (authorityId) {
-          result = await getFilteredEstablishmentRatings(pageNum, authorityId);
+          result = await getFilteredEstablishmentRatings(page, authorityId);
         } else {
-          result = await getEstablishmentRatings(pageNum);
+          result = await getEstablishmentRatings(page);
         }
 
         setEstablishments(result.establishments);
@@ -71,29 +58,35 @@ export const PaginatedEstablishmentsTable = () => {
     return <div>Error: {error.message}</div>;
   } else {
     return (
-      <div style={tableStyle}>
+      <>
         <h2>Food Hygiene Ratings</h2>
 
         <EstablishmentAuthorityFilter
           onChange={handleFilterChange}
         />
 
-        <EstablishmentsTable
-          establishments={establishments}
-        />
+        <Table
+          columns={['Business Name', 'Rating Value']}
+        >
+          {
+            establishments?.map((establishment: Establishment) => (
+              <EstablishmentListRow
+                key={establishment.FHRSID}
+                establishment={establishment}
+                onclick={onEstablishmentClick}
+              />
+            ))
+          }
+        </Table>
 
-        {
-          isLoading && (
-            <span style={loaderStyle}>Loading...</span>
-          )
-        }
+        { isLoading && <Loader /> }
 
-        <EstablishmentsTableNavigation
+        <EstablishmentsNavigation
           pageNum={pageNum}
           pageCount={pageCount}
           updatePage={setPageNum}
         />
-      </div>
+      </>
     );
   }
 };

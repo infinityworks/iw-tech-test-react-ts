@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getAuthorities, Authority } from "../api/ratingsAPI";
+import { getAuthorities, Authority } from "../../api/ratingsAPI";
 
 const filterStyle: { [key: string]: string | number } = {
   marginBottom: "1rem"
