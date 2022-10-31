@@ -17,12 +17,23 @@ export type EstablishmentsType = {
     }
   ];
 };
+const api = process.env.REACT_APP_API_BASE_URL;
 
 export function getEstablishmentRatings(
   pageNum: number
 ): Promise<EstablishmentsType> {
+  return fetch(`${api}/Establishments/basic/${pageNum}/10`, {
+    headers: { "x-api-version": "2" },
+  }).then((res) => res.json());
+}
+
+export function getFilteredEstablishmentRatings(
+  pageNum: number,
+  localAuthorityId: string,
+  countryId: string
+): Promise<EstablishmentsType> {
   return fetch(
-    `http://api.ratings.food.gov.uk/Establishments/basic/${pageNum}/10`,
+    `${api}/Establishments?pageSize=${pageNum}&localAuthorityId=${localAuthorityId}&countryId=${countryId}`,
     { headers: { "x-api-version": "2" } }
   ).then((res) => res.json());
 }

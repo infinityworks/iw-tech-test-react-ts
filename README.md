@@ -9,6 +9,7 @@ This is the Infinity Works React TypeScript Tech Test.
 - Yarn
 - Access to the Internet
 - Suitable development environment
+- ##### Node.JS v14.20.1
 
 ## Getting Started
 

@@ -1,9 +1,14 @@
-import React, { Component } from "react";
-import HomePage from "./components/HomePage";
+import { Component } from "react";
+import Pages from "./pages/pagesExport";
+import { BrowserRouter as Router } from "react-router-dom";
 
 class App extends Component {
   render() {
-    return <HomePage />;
+    return (
+      <Router>
+        <Pages />
+      </Router>
+    );
   }
 }
 

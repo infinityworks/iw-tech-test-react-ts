@@ -10,26 +10,49 @@ const headerStyle: { [key: string]: string | number } = {
 
 export const EstablishmentsTable: React.FC<{
   establishments: { [key: string]: string }[] | null | undefined;
-}> = ({ establishments }) => {
+  state: {
+    data: {}[];
+    headerAttr: { BusinessName: string; RatingValue: string };
+    isLoading: boolean;
+  };
+}> = ({ establishments, state }) => {
   return (
     <table>
       <tbody>
         <tr>
-          <th style={headerStyle}>Business Name</th>
-          <th style={headerStyle}>Rating Value</th>
+          {Object.keys(state.headerAttr).map((attr: string, index: number) => {
+            return (
+              <th key={index} style={headerStyle}>
+                {attr}
+              </th>
+            );
+          })}
         </tr>
-        {establishments &&
-          establishments?.map(
-            (
-              establishment: { [key: string]: string } | null | undefined,
-              index: React.Key | null | undefined
-            ) => (
-              <EstablishmentsTableRow
-                key={index}
-                establishment={establishment}
-              />
+        {state.isLoading ? (
+          <tr>
+            <td>Loading ...</td>
+          </tr>
+        ) : null}
+        {establishments ? (
+          establishments && establishments.length > 0 ? (
+            establishments.map(
+              (
+                establishment: { [key: string]: string } | null | undefined,
+                index: React.Key | null | undefined
+              ) => (
+                <EstablishmentsTableRow
+                  key={index}
+                  establishment={establishment}
+                  headerAttr={state.headerAttr}
+                />
+              )
             )
-          )}
+          ) : (
+            <tr>
+              <td>Nothing to display</td>
+            </tr>
+          )
+        ) : null}
       </tbody>
     </table>
   );
@@ -37,4 +60,9 @@ export const EstablishmentsTable: React.FC<{
 
 EstablishmentsTable.propTypes = {
   establishments: PropTypes.array,
+  // state: {
+  //   // data: PropTypes.array,
+  //   headerAttr: { BusinessName: PropTypes.string, RatingValue: PropTypes.string },
+  //   isLoading: PropTypes.bool
+  // },
 };
