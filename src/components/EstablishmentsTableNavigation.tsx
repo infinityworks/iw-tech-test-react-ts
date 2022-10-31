@@ -1,5 +1,7 @@
 const buttonStyle = {
   margin: "0 5px",
+  cursor: "pointer",
+
 };
 
 type EstablishmentsTableNavigationType = {

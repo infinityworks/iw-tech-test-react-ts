@@ -9,13 +9,12 @@ const headerStyle: { [key: string]: string | number } = {
 };
 
 export const EstablishmentsTable: React.FC<{
-  establishments: { [key: string]: string }[] | null | undefined;
   state: {
-    data: {}[];
-    headerAttr: { BusinessName: string; RatingValue: string };
+    data: { [key: string]: string }[] | null | undefined;
+    headerAttr: { BusinessName: string; RatingValue: string, Favorite: string  };
     isLoading: boolean;
   };
-}> = ({ establishments, state }) => {
+}> = ({ state }) => {
   return (
     <table>
       <tbody>
@@ -33,33 +32,31 @@ export const EstablishmentsTable: React.FC<{
             <td>Loading ...</td>
           </tr>
         ) : null}
-        {establishments ? (
-          establishments && establishments.length > 0 ? (
-            establishments.map(
-              (
-                establishment: { [key: string]: string } | null | undefined,
-                index: React.Key | null | undefined
-              ) => (
-                <EstablishmentsTableRow
-                  key={index}
-                  establishment={establishment}
-                  headerAttr={state.headerAttr}
-                />
-              )
+        {state.data && state.data.length > 0 && state.isLoading === false ? (
+          state.data.map(
+            (
+              establishment: { [key: string]: string } | null | undefined,
+              index: React.Key | null | undefined
+            ) => (
+              <EstablishmentsTableRow
+                key={index}
+                establishment={establishment}
+                headerAttr={state.headerAttr}
+              />
             )
-          ) : (
-            <tr>
-              <td>Nothing to display</td>
-            </tr>
           )
-        ) : null}
+        ) : (
+          <tr>
+            <td>Nothing to display</td>
+          </tr>
+        )}
       </tbody>
     </table>
   );
 };
 
 EstablishmentsTable.propTypes = {
-  establishments: PropTypes.array,
+  // state: PropTypes.array,
   // state: {
   //   // data: PropTypes.array,
   //   headerAttr: { BusinessName: PropTypes.string, RatingValue: PropTypes.string },
