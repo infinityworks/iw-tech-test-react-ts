@@ -11,7 +11,7 @@ const headerStyle: { [key: string]: string | number } = {
 export const EstablishmentsTable: React.FC<{
   state: {
     data: { [key: string]: string }[] | null | undefined;
-    headerAttr: { BusinessName: string; RatingValue: string, Favorite: string  };
+    headerAttr: { BusinessName: string; RatingValue: string; Favorite: string };
     isLoading: boolean;
   };
 }> = ({ state }) => {
@@ -45,21 +45,20 @@ export const EstablishmentsTable: React.FC<{
               />
             )
           )
-        ) : (
+        ) : state.data?.length === 0 ? (
           <tr>
             <td>Nothing to display</td>
           </tr>
-        )}
+        ) : null}
       </tbody>
     </table>
   );
 };
 
 EstablishmentsTable.propTypes = {
-  // state: PropTypes.array,
   // state: {
-  //   // data: PropTypes.array,
+  //   // data: PropTypes.arrayOf(PropTypes.object),
   //   headerAttr: { BusinessName: PropTypes.string, RatingValue: PropTypes.string },
-  //   isLoading: PropTypes.bool
-  // },
+  //   isLoading: PropTypes.bool,
+  // }
 };

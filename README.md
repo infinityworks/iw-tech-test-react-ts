@@ -9,6 +9,7 @@ This is the Infinity Works React TypeScript Tech Test.
 - Yarn
 - Access to the Internet
 - Suitable development environment
+- Docker
 - ##### Node.JS v14.20.1
 
 ## Getting Started
@@ -16,3 +17,7 @@ This is the Infinity Works React TypeScript Tech Test.
 - Run it: `yarn start`
 - Test it: `yarn test`
 - Build it: `yarn build`
+
+## Docker
+- `docker build . -t dockerized-react`
+- `docker run -p 3000:3000 -d dockerized-react`
