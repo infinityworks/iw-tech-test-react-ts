@@ -23,6 +23,8 @@ export const PaginatedEstablishmentsTable: React.FC<{
   setError: any;
   selectedAuthority: string;
   selectedCountry: string;
+  resetFilter: boolean;
+  setResetFilter: any;
 }> = ({
   pageNum,
   setPageNum,
@@ -30,19 +32,21 @@ export const PaginatedEstablishmentsTable: React.FC<{
   setError,
   selectedAuthority,
   selectedCountry,
+  resetFilter,
+  setResetFilter
 }) => {
   let initialState = {
     data: [],
     headerAttr: {
       BusinessName: "BusinessName",
       RatingValue: "RatingValue",
-      Favorite: "Favorite"
+      Favorite: "Favorite",
     },
     isLoading: false,
   };
   const [state, setState] = useState<{
     data: { [key: string]: string }[];
-    headerAttr: { BusinessName: string; RatingValue: string, Favorite: string };
+    headerAttr: { BusinessName: string; RatingValue: string; Favorite: string };
     isLoading: boolean;
   }>(initialState);
 
@@ -50,25 +54,29 @@ export const PaginatedEstablishmentsTable: React.FC<{
 
   useEffect(() => {
     setState({ ...state, isLoading: true });
-    getEstablishmentRatings(pageNum).then(
-      (result) => {
-        setState({ ...state, data: result?.establishments, isLoading: false });
-      },
-      (error) => {
-        setState({ ...state, isLoading: false });
-        setError(error);
-      }
-    );
+    getAllEstablishments();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
-    if (selectedCountry.length > 0 || selectedAuthority.length > 0) {
+    if (resetFilter === true) {
+      setState({ ...state, isLoading: true });
+      getAllEstablishments();
+      setResetFilter(false)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [resetFilter]);
+
+  useEffect(() => {
+    if (
+      (selectedAuthority !== undefined && selectedAuthority.length > 0) ||
+      (selectedCountry !== undefined && selectedCountry.length > 0)
+    ) {
       setState({ ...state, isLoading: true });
       getFilteredEstablishmentRatings(
         pageNum,
-        selectedAuthority,
-        selectedCountry
+        selectedAuthority !== undefined ? selectedAuthority.toString() : "",
+        selectedCountry !== undefined ? selectedCountry.toString() : ""
       ).then(
         (result) => {
           setState({
@@ -83,7 +91,6 @@ export const PaginatedEstablishmentsTable: React.FC<{
         }
       );
     }
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedCountry, selectedAuthority]);
 
@@ -115,12 +122,24 @@ export const PaginatedEstablishmentsTable: React.FC<{
     );
   }
 
+  const getAllEstablishments = async () => {
+    getEstablishmentRatings(pageNum).then(
+      (result) => {
+        setState({ ...state, data: result?.establishments, isLoading: false });
+      },
+      (error) => {
+        setState({ ...state, isLoading: false });
+        setError(error);
+      }
+    );
+  };
+
   if (error) {
     return <div>Error: {error.message}</div>;
   } else {
     return (
       <>
-        <div style={tableStyle}>
+        <main style={tableStyle}>
           <h2>{labelFood}</h2>
           <EstablishmentsTable state={state} />
           <EstablishmentsTableNavigation
@@ -129,7 +148,7 @@ export const PaginatedEstablishmentsTable: React.FC<{
             onPreviousPage={handlePreviousPage}
             onNextPage={handleNextPage}
           />
-        </div>
+        </main>
       </>
     );
   }

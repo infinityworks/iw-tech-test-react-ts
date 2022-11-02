@@ -1,6 +1,13 @@
 import { useState, useEffect } from "react";
 import { PaginatedEstablishmentsTable } from "../components/PaginatedEstablishmentsTable";
 import { getAuthorities, getCountries } from "../services/filterApi";
+import Dropdown from "../components/Dropdown/dropdown";
+
+const filterStyle: { [key: string]: string | number } = {
+  padding: "10px",
+  display: "grid",
+  width: "30%",
+};
 
 const headerStyle: { [key: string]: string | number } = {
   padding: "10px",
@@ -12,8 +19,8 @@ const headerStyle: { [key: string]: string | number } = {
 
 const labelAuth = "Choose an Authority:";
 const labelCountry = "Choose a Country:";
-
 const pageLabel = "Home Page";
+const labelResetButton = "Reset Filter";
 
 const HomePage = () => {
   const [error, setError] = useState<{
@@ -27,79 +34,97 @@ const HomePage = () => {
   const [countries, setCountries] = useState<{ [key: string]: string }[]>([]);
   const [selectedCountry, setSelectedCountry] = useState("");
   const [selectedAuthority, setSelectedAuthority] = useState("");
-
+  const [selectedCountryValue, setSelectedCountryValue] = useState("");
+  const [selectedAuthorityValue, setSelectedAuthorityValue] = useState("");
+  const [resetFilter, setResetFilter] = useState(false);
   useEffect(() => {
-    getAuthorities().then(
-      (res) => {
-        setAuthorities(res.authorities);
-      },
-      (error) => {
-        setError(error);
-      }
-    );
-    getCountries().then(
-      (res) => {
-        setCountries(res.countries);
-      },
-      (error) => {
-        setError(error);
-      }
-    );
+    getAuthoritiesFunction();
+    getCountriesFunction();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const getAuthoritiesFunction = async () => {
+    getAuthorities().then(
+      (res: any) => {
+        setAuthorities([{ Name: "" }].concat(res.authorities));
+      },
+      (error) => {
+        setError(error);
+      }
+    );
+  };
+  const getCountriesFunction = async () => {
+    getCountries().then(
+      (res: any) => {
+        setCountries([{ name: "" }].concat(res.countries));
+      },
+      (error) => {
+        setError(error);
+      }
+    );
+  };
+
   const handleCountry = (e: any) => {
-    const index = parseInt(e.target.value) - 1;
+    const index = parseInt(e.target.value);
     if (index !== undefined && countries[index].id !== undefined) {
-      setSelectedCountry(countries[index].id.toString());
+      setSelectedCountry(countries[index].id);
+      setSelectedCountryValue(countries[index].id);
       setPageNum(1);
     }
   };
 
   const handleAuthorities = (e: any) => {
-    const index = parseInt(e.target.value) - 1;
+    const index = parseInt(e.target.value);
     if (
       index !== undefined &&
       authorities[index].LocalAuthorityId !== undefined
     ) {
-      setSelectedAuthority(authorities[index].LocalAuthorityId.toString());
+      setSelectedAuthority(index.toString());
+      setSelectedAuthorityValue(authorities[index].LocalAuthorityId.toString());
       setPageNum(1);
     }
   };
+
+  const handleResetFilter = () => {
+    setSelectedCountry("");
+    setSelectedAuthority("");
+    setPageNum(1);
+    setResetFilter(true);
+  };
+
   return (
     <section>
       <h1 style={headerStyle}>{pageLabel}</h1>
-      <div>
-        <label style={headerStyle}>{labelAuth} </label>
-        <select
-          name="authorities"
-          id="authorities"
+      <aside style={filterStyle}>
+        <Dropdown
+          name={"authorities"}
+          label={labelAuth}
           onChange={handleAuthorities}
-        >
-          {authorities.map((authority: any) => {
-            return (
-              <option value={authority.LocalAuthorityId}>
-                {authority.Name}
-              </option>
-            );
-          })}
-        </select>
-      </div>
-      <div>
-        <label style={headerStyle}>{labelCountry}</label>
-        <select name="countries" id="countries" onChange={handleCountry}>
-          {countries.map((country: any) => {
-            return <option value={country.id}>{country.name}</option>;
-          })}
-        </select>
-      </div>
+          value={selectedAuthority}
+          options={authorities}
+          optionLabel={"Name"}
+        />
+        <Dropdown
+          name={"countries"}
+          label={labelCountry}
+          onChange={handleCountry}
+          value={selectedCountry}
+          options={countries}
+          optionLabel={"name"}
+        />
+        <div>
+          <button onClick={handleResetFilter}>{labelResetButton}</button>
+        </div>
+      </aside>
       <PaginatedEstablishmentsTable
         pageNum={pageNum}
         setPageNum={setPageNum}
         error={error}
         setError={setError}
-        selectedAuthority={selectedAuthority}
-        selectedCountry={selectedCountry}
+        selectedAuthority={selectedAuthorityValue}
+        selectedCountry={selectedCountryValue}
+        resetFilter={resetFilter}
+        setResetFilter={setResetFilter}
       />
     </section>
   );

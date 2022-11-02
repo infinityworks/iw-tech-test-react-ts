@@ -1,5 +1,5 @@
 import { enableFetchMocks } from "jest-fetch-mock";
-import { getEstablishmentRatings } from "./ratingsAPI";
+import { getEstablishmentRatings } from "../../services/ratingsAPI";
 import fetch from "jest-fetch-mock";
 
 enableFetchMocks();
