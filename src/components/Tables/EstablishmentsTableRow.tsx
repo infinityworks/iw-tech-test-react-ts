@@ -1,4 +1,6 @@
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { FavoriteContext } from "../../App";
 
 const styledValues: { [key: string]: string | number } = {
   fontSize: "20px",
@@ -19,14 +21,30 @@ export const EstablishmentsTableRow: React.FC<{
   headerAttr: { BusinessName: string; RatingValue: string; Favorite: string };
 }> = ({ establishment, headerAttr }) => {
   let navigate = useNavigate();
-
-  const handleClick = (e: any) => {
+  const [checked, setChecked] = useState(false);
+  const { favorite, setFavorite } = useContext(FavoriteContext);
+  const handleNavigate = (e: any) => {
     if (e !== undefined) {
       const id = e.target.getAttribute("id");
       if (id != null) navigate(`/detail/${id}`);
     }
   };
 
+  const handleFavorite = (e: any) => {
+    if (e !== undefined) {
+      const id = e.target.getAttribute("id");
+      setChecked(!checked);
+      if (!checked) {
+        setFavorite([...favorite, establishment]);
+      } else if (!checked === false) {
+        const filtered = favorite.filter(
+          (obj: any) => obj.FHRSID !== parseInt(id)
+        );
+        if (filtered.length === 0) setFavorite([]);
+        setFavorite(filtered);
+      }
+    }
+  };
   return (
     <tr>
       {Object.keys(headerAttr).map((attr: string, index: number) => {
@@ -34,19 +52,20 @@ export const EstablishmentsTableRow: React.FC<{
           switch (attr) {
             case "Favorite":
               return (
-                <td
-                  id={establishment.FHRSID}
-                  key={index}
-                  style={styledCheckBoxes}
-                >
-                  <input type="checkbox" />
+                <td key={index} style={styledCheckBoxes}>
+                  <input
+                    id={establishment.FHRSID}
+                    type="checkbox"
+                    onChange={handleFavorite}
+                    defaultChecked={false}
+                  />
                 </td>
               );
             case "BusinessName":
               return (
                 <td
                   id={establishment.FHRSID}
-                  onClick={handleClick}
+                  onClick={handleNavigate}
                   key={index}
                   style={styledClickableValues}
                 >

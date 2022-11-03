@@ -4,7 +4,7 @@ import { EstablishmentsTableNavigation } from "./EstablishmentsTableNavigation";
 import {
   getEstablishmentRatings,
   getFilteredEstablishmentRatings,
-} from "../services/ratingsAPI";
+} from "../../services/ratingsAPI";
 
 const tableStyle = {
   background: "rgba(51, 51, 51, 0.9)",

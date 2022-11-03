@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { PaginatedEstablishmentsTable } from "../components/PaginatedEstablishmentsTable";
+import { PaginatedEstablishmentsTable } from "../components/Tables/PaginatedEstablishmentsTable";
 import { getAuthorities, getCountries } from "../services/filterApi";
 import Dropdown from "../components/Dropdown/dropdown";
 
