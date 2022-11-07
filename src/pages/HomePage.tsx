@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { PaginatedEstablishmentsTable } from "../components/Tables/PaginatedEstablishmentsTable";
+import { PaginatedEstablishmentsTable } from "../components/Tables/Establishments/PaginatedEstablishmentsTable";
 import { getAuthorities, getCountries } from "../services/filterApi";
 import Dropdown from "../components/Dropdown/dropdown";
 
@@ -37,6 +37,7 @@ const HomePage = () => {
   const [selectedCountryValue, setSelectedCountryValue] = useState("");
   const [selectedAuthorityValue, setSelectedAuthorityValue] = useState("");
   const [resetFilter, setResetFilter] = useState(false);
+  
   useEffect(() => {
     getAuthoritiesFunction();
     getCountriesFunction();
@@ -85,10 +86,15 @@ const HomePage = () => {
     }
   };
 
-  const handleResetFilter = () => {
+  const handleResetFilterToOne = () => {
     setSelectedCountry("");
     setSelectedAuthority("");
     setPageNum(1);
+    setResetFilter(true);
+  };
+  const handleResetFilter = () => {
+    setSelectedCountry("");
+    setSelectedAuthority("");
     setResetFilter(true);
   };
 
@@ -113,7 +119,7 @@ const HomePage = () => {
           optionLabel={"name"}
         />
         <div>
-          <button onClick={handleResetFilter}>{labelResetButton}</button>
+          <button onClick={handleResetFilterToOne}>{labelResetButton}</button>
         </div>
       </aside>
       <PaginatedEstablishmentsTable
@@ -125,6 +131,7 @@ const HomePage = () => {
         selectedCountry={selectedCountryValue}
         resetFilter={resetFilter}
         setResetFilter={setResetFilter}
+        handleResetFilter={handleResetFilter}
       />
     </section>
   );

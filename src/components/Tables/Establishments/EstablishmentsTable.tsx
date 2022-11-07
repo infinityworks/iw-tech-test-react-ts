@@ -8,13 +8,17 @@ const headerStyle: { [key: string]: string | number } = {
   fontSize: "20px",
 };
 
+const labelLoading = "Loading ...";
+const labelEmpty = "Nothing to display";
+
 export const EstablishmentsTable: React.FC<{
   state: {
     data: { [key: string]: string }[] | null | undefined;
     headerAttr: { BusinessName: string; RatingValue: string; Favorite: string };
     isLoading: boolean;
   };
-}> = ({ state }) => {
+  setState: any;
+}> = ({ state, setState }) => {
   return (
     <table>
       <tbody>
@@ -29,7 +33,7 @@ export const EstablishmentsTable: React.FC<{
         </tr>
         {state.isLoading ? (
           <tr>
-            <td>Loading ...</td>
+            <td>{labelLoading}</td>
           </tr>
         ) : null}
         {state.data && state.data.length > 0 && state.isLoading === false ? (
@@ -42,12 +46,14 @@ export const EstablishmentsTable: React.FC<{
                 key={index}
                 establishment={establishment}
                 headerAttr={state.headerAttr}
+                setState={setState}
+                state={state}
               />
             )
           )
         ) : state.data?.length === 0 ? (
           <tr>
-            <td>Nothing to display</td>
+            <td>{labelEmpty}</td>
           </tr>
         ) : null}
       </tbody>
