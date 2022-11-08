@@ -21,7 +21,7 @@ const Dropdown: React.FC<{
       <label style={headerStyle}>{label} </label>
       <select name={name} id={name} onChange={onChange} value={value}>
         {options.map((value: any, index: number) => {
-          return <option value={index}>{value[optionLabel]}</option>;
+          return <option value={index} key={index}>{value[optionLabel]}</option>;
         })}
       </select>
     </div>

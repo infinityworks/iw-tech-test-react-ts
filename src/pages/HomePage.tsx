@@ -6,7 +6,11 @@ import Dropdown from "../components/Dropdown/dropdown";
 const filterStyle: { [key: string]: string | number } = {
   padding: "10px",
   display: "grid",
-  width: "30%",
+  width: "35%",
+  background: "rgba(51, 51, 51, 0.9)",
+  marginLeft: "50px",
+  color: "white",
+  marginBottom: "3%"
 };
 
 const headerStyle: { [key: string]: string | number } = {

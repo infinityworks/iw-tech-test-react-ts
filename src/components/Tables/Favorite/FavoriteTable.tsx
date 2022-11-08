@@ -1,4 +1,3 @@
-import { useState, useEffect, useContext } from "react";
 import { FavoriteTableRow } from "./FavoriteTableRow";
 
 const headerStyle: { [key: string]: string | number } = {
@@ -12,18 +11,15 @@ const headerStyle: { [key: string]: string | number } = {
 const labelEmpty = "Nothing to display";
 
 export const FavoriteTable: React.FC<{
-  state: {
-    data: { [key: string]: string }[];
-    headerAttr: { BusinessName: string; RatingValue: string; Favorite: string };
-    isLoading: boolean;
-  };
-  setState:any
-}> = ({ state, setState }) => {
+  data: { [key: string]: string }[];
+  headerAttr: { BusinessName: string; RatingValue: string; Favorite: string };
+  handleDelete:any;
+}> = ({ data, headerAttr,handleDelete }) => {
   return (
     <table>
       <tbody>
         <tr>
-          {Object.keys(state.headerAttr).map((attr: string, index: number) => {
+          {Object.keys(headerAttr).map((attr: string, index: number) => {
             return (
               <th key={index} style={headerStyle}>
                 {attr}
@@ -31,8 +27,8 @@ export const FavoriteTable: React.FC<{
             );
           })}
         </tr>
-        {state.data && state.data.length > 0 && state.isLoading === false ? (
-          state.data.map(
+        {data && data.length > 0 ? (
+          data.map(
             (
               establishment: { [key: string]: string } | null | undefined,
               index: React.Key | null | undefined
@@ -40,13 +36,12 @@ export const FavoriteTable: React.FC<{
               <FavoriteTableRow
                 key={index}
                 establishment={establishment}
-                headerAttr={state.headerAttr}
-                setState={setState}
-                state={state}
+                headerAttr={headerAttr}
+                handleDelete={handleDelete}
               />
             )
           )
-        ) : state.data?.length === 0 ? (
+        ) : data?.length === 0 ? (
           <tr>
             <td>{labelEmpty}</td>
           </tr>
