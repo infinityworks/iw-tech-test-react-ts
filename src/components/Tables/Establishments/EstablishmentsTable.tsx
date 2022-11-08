@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { EstablishmentsTableRow } from "./EstablishmentsTableRow";
-import { useContext } from "react";
 import { FavoriteContext, FavoriteDeletionContext } from "../../../App";
 
 const headerStyle: { [key: string]: string | number } = {
@@ -21,6 +20,9 @@ export const EstablishmentsTable: React.FC<{
   setState: any;
 }> = ({ state, setState }) => {
   const { favorite, setFavorite } = useContext(FavoriteContext);
+  const { favoriteDeletion, setFavoriteDeletion } = useContext(
+    FavoriteDeletionContext
+  );
 
   const handleChange = (isFavorite: boolean, i: number) => {
     const id = parseInt(state.data[i].FHRSID);
@@ -44,7 +46,33 @@ export const EstablishmentsTable: React.FC<{
     setState({ ...state, data: [...todosClone] });
   };
 
+  useEffect(() => {
+    const index = state.data.findIndex((val) => {
+      return val.FHRSID === favoriteDeletion;
+    });
 
+    if (
+      index !== -1 &&
+      favoriteDeletion !== 0 &&
+      state.data[index].FHRSID === favoriteDeletion
+    ) {
+      setState({
+        ...state,
+        data: state.data.map((val: any) => {
+          if (val.FHRSID === favoriteDeletion) {
+            console.log(`index: ${index}`);
+            console.log(`FH: ${val.FHRSID}`);
+            console.log(`favorite: ${favoriteDeletion}`);
+            console.log(`Val before: ${val.isFavorite}`);
+            val.isFavorite = !val.isFavorite;
+            console.log(val);
+            return val
+          }else return val;
+        }),
+      });
+      setFavoriteDeletion(0);
+    }
+  }, [favoriteDeletion, setFavoriteDeletion, setState, state]);
 
   return (
     <table>

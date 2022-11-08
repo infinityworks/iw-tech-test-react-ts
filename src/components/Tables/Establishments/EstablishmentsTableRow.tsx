@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState, useMemo } from "react";
+import { useContext,  useState} from "react";
 import { useNavigate } from "react-router-dom";
 import { FavoriteContext, FavoriteDeletionContext } from "../../../App";
 import Checkbox from "../../Checkbox/checkbox";
@@ -35,10 +35,10 @@ export const EstablishmentsTableRow: React.FC<Props> = ({
   indexRow
 }) => {
   let navigate = useNavigate();
-  const { favorite, setFavorite } = useContext(FavoriteContext);
-  const { favoriteDeletion, setFavoriteDeletion } = useContext(
-    FavoriteDeletionContext
-  );
+  // const { favorite, setFavorite } = useContext(FavoriteContext);
+  // const { favoriteDeletion, setFavoriteDeletion } = useContext(
+  //   FavoriteDeletionContext
+  // );
   const [defaulteEstablishment] = useState(establishment);
 
   const handleNavigate = (e: any) => {
