@@ -6,7 +6,7 @@ const styledValues: { [key: string]: string | number } = {
 
 interface Props {
   establishment: { [key: string]: any } | null | undefined;
-  handleDelete?:any;
+  handleDelete?: any;
   headerAttr: { BusinessName: string; RatingValue: string; Favorite: string };
 }
 

@@ -1,6 +1,7 @@
 import React from "react";
 import { EstablishmentsTableRow } from "./EstablishmentsTableRow";
-import PropTypes from "prop-types";
+import { useContext } from "react";
+import { FavoriteContext, FavoriteDeletionContext } from "../../../App";
 
 const headerStyle: { [key: string]: string | number } = {
   paddingBottom: "10px",
@@ -13,12 +14,38 @@ const labelEmpty = "Nothing to display";
 
 export const EstablishmentsTable: React.FC<{
   state: {
-    data: { [key: string]: string }[] | null | undefined;
+    data: { [key: string]: string }[];
     headerAttr: { BusinessName: string; RatingValue: string; Favorite: string };
     isLoading: boolean;
   };
   setState: any;
 }> = ({ state, setState }) => {
+  const { favorite, setFavorite } = useContext(FavoriteContext);
+
+  const handleChange = (isFavorite: boolean, i: number) => {
+    const id = parseInt(state.data[i].FHRSID);
+    if (Boolean(state.data[i].isFavorite) === false) {
+      // putting defaulteEstablishment into favorite context
+      const index = favorite.findIndex((fav: any) => {
+        return fav.FHRSID === id;
+      });
+      if (index === -1) setFavorite([...favorite, state.data[i]]);
+    } else if (Boolean(state.data[i].isFavorite) === true) {
+      // putting defaulteEstablishment into favorite context
+      const filtered = favorite.filter((obj: any) => obj.FHRSID !== id);
+      if (filtered.length === 0) setFavorite([]);
+      setFavorite(filtered);
+    }
+    //setting state
+    let tmp: any = state.data[i];
+    tmp.isFavorite = !isFavorite;
+    let todosClone: any = [...state.data];
+    todosClone[i] = tmp;
+    setState({ ...state, data: [...todosClone] });
+  };
+
+
+
   return (
     <table>
       <tbody>
@@ -40,14 +67,15 @@ export const EstablishmentsTable: React.FC<{
           state.data.map(
             (
               establishment: { [key: string]: string } | null | undefined,
-              index: React.Key | null | undefined
+              indexRow: number
             ) => (
               <EstablishmentsTableRow
-                key={index}
+                indexRow={indexRow}
                 establishment={establishment}
                 headerAttr={state.headerAttr}
                 setState={setState}
                 state={state}
+                handleChange={handleChange}
               />
             )
           )
@@ -59,12 +87,4 @@ export const EstablishmentsTable: React.FC<{
       </tbody>
     </table>
   );
-};
-
-EstablishmentsTable.propTypes = {
-  // state: {
-  //   // data: PropTypes.arrayOf(PropTypes.object),
-  //   headerAttr: { BusinessName: PropTypes.string, RatingValue: PropTypes.string },
-  //   isLoading: PropTypes.bool,
-  // }
 };
