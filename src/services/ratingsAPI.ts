@@ -31,13 +31,15 @@ export type EstablishmentsType = {
   ];
 };
 const api = process.env.REACT_APP_API_BASE_URL;
-
+const headers = {
+  headers: { "x-api-version": "2" },
+};
 export function getEstablishmentRatings(
   pageNum: number
 ): Promise<EstablishmentsType> {
-  return fetch(`${api}/Establishments/basic/${pageNum}/10`, {
-    headers: { "x-api-version": "2" },
-  }).then((res) => res.json());
+  return fetch(`${api}/Establishments/basic/${pageNum}/10`, headers).then(
+    (res) => res.json()
+  );
 }
 
 export function getFilteredEstablishmentRatings(
@@ -47,6 +49,6 @@ export function getFilteredEstablishmentRatings(
 ): Promise<EstablishmentsType> {
   return fetch(
     `${api}/Establishments?pageSize=${pageNum}&localAuthorityId=${localAuthorityId}&countryId=${countryId}`,
-    { headers: { "x-api-version": "2" } }
+    headers
   ).then((res) => res.json());
 }

@@ -12,7 +12,7 @@
 ## 📝 Table of Contents
 
 - [Getting Started](#getting_started)
-- [Requirements](#requirements) 
+- [Requirements](#requirements)
 - [Deployment](#deployment)
 
 ## 🤔 Requirements <a name = "requirements"></a>
@@ -23,22 +23,43 @@
 - Docker
 - ##### Node.JS v14.20.1
 
-## 🏁 Getting Started  <a name = "getting_started"></a>
+## 🏁 Getting Started <a name = "getting_started"></a>
 
 👷 Running Locally
+
 - `git clone https://github.com/fire2124/iw-tech-test-react-ts`
 - `cd Frontend/src `
 
-
 👷 Docker
+
 - `docker build . -t dockerized-react`
 - `docker run -p 3000:3000 -d dockerized-react`
 
 👷 Installing
+
 - Install: `yarn install`
 
 👷 Available Scripts
+
+- Build it: `yarn build`
 - Run it: `yarn start`
 - Test it: `yarn test`
-- Build it: `yarn build`
 
+  ***
+
+  - 👷E2E tests
+  For this project we will use Katalon Studio -> This tool allow us to record all test cases
+  
+  #### Downloading
+  For Downloading Katalon you need to login to this page:
+  https://testops.katalon.io/login
+  #### Authethification
+    login: filip.reichl.work@gmail.com
+    password: Jozko-mrkvicka1596
+
+  ***
+
+  #### Installing
+
+  for Mac -> https://download.katalon.com/8.5.2/Katalon%20Studio%20PE.dmg
+  for Win -> https://download.katalon.com/8.5.2/Katalon_Studio_PE_Windows_64-8.5.2.zip

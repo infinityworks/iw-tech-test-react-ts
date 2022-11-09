@@ -76,8 +76,9 @@ export const PaginatedEstablishmentsTable: React.FC<Props> = ({
 
   useEffect(() => {
     if (
-      (selectedAuthority !== undefined && selectedAuthority.length > 0) ||
-      (selectedCountry !== undefined && selectedCountry.length > 0)
+      (selectedAuthority !== undefined &&
+        selectedAuthority.toString().length > 0) ||
+      (selectedCountry !== undefined && selectedCountry.toString().length > 0)
     ) {
       setState({ ...state, isLoading: true });
       getFilteredEstablishmentRatings(

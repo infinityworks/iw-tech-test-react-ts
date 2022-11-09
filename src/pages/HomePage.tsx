@@ -98,12 +98,16 @@ const HomePage = () => {
   const handleResetFilterToOne = () => {
     setSelectedCountry("");
     setSelectedAuthority("");
+    setSelectedAuthorityValue("");
+    setSelectedCountryValue("");
     setPageNum(1);
     setResetFilter(true);
   };
   const handleResetFilter = () => {
     setSelectedCountry("");
     setSelectedAuthority("");
+    setSelectedAuthorityValue("");
+    setSelectedCountryValue("");
     setResetFilter(true);
   };
 
