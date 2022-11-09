@@ -5,7 +5,9 @@
 
 <h1 align="center">  iw-tech-test-react-ts </h1>
 
-<p align="left">This is the Infinity Works React TypeScript Tech Test.</p>
+<p align="left">This is the Infinity Works React TypeScript Tech Test. 
+<a href="https://handbook.infinityworks.com/running-iw/recruitment/elaborations/front-end-user-story-and-elaboration">More about project here</a>
+</p>
 
 ---
 
@@ -48,14 +50,17 @@
   ***
 
   - 👷E2E tests
-  For this project we will use Katalon Studio -> This tool allow us to record all test cases
-  
+    For this project we will use Katalon Studio -> This tool allow us to record all test cases
+
   #### Downloading
+
   For Downloading Katalon you need to login to this page:
   https://testops.katalon.io/login
+
   #### Authethification
-    login: filip.reichl.work@gmail.com
-    password: Jozko-mrkvicka1596
+
+  login: filip.reichl.work@gmail.com
+  password: Jozko-mrkvicka1596
 
   ***
 
