@@ -1,6 +1,11 @@
 import { useState, useEffect } from "react";
 import { PaginatedEstablishmentsTable } from "../components/Tables/Establishments/PaginatedEstablishmentsTable";
-import { getAuthorities, getCountries } from "../services/filterApi";
+import {
+  getAuthorities,
+  getCountries,
+  AuthoritiesType,
+  CountriesType,
+} from "../services/filterApi";
 import Dropdown from "../components/Dropdown/dropdown";
 
 const filterStyle: { [key: string]: string | number } = {
@@ -10,7 +15,7 @@ const filterStyle: { [key: string]: string | number } = {
   background: "rgba(51, 51, 51, 0.9)",
   marginLeft: "50px",
   color: "white",
-  marginBottom: "3%"
+  marginBottom: "3%",
 };
 
 const headerStyle: { [key: string]: string | number } = {
@@ -41,7 +46,7 @@ const HomePage = () => {
   const [selectedCountryValue, setSelectedCountryValue] = useState("");
   const [selectedAuthorityValue, setSelectedAuthorityValue] = useState("");
   const [resetFilter, setResetFilter] = useState(false);
-  
+
   useEffect(() => {
     getAuthoritiesFunction();
     getCountriesFunction();
@@ -50,7 +55,7 @@ const HomePage = () => {
 
   const getAuthoritiesFunction = async () => {
     getAuthorities().then(
-      (res: any) => {
+      (res: AuthoritiesType) => {
         setAuthorities([{ Name: "" }].concat(res.authorities));
       },
       (error) => {
@@ -60,7 +65,7 @@ const HomePage = () => {
   };
   const getCountriesFunction = async () => {
     getCountries().then(
-      (res: any) => {
+      (res: CountriesType) => {
         setCountries([{ name: "" }].concat(res.countries));
       },
       (error) => {

@@ -1,5 +1,8 @@
 import { useState, useEffect } from "react";
-import { getEstablishmentDetail } from "../services/detailApi";
+import {
+  getEstablishmentDetail,
+  EstablishmentsType,
+} from "../services/detailApi";
 import { useNavigate } from "react-router-dom";
 import { getDate } from "../services/helper";
 
@@ -16,7 +19,7 @@ const backgroundStyled: { [key: string]: string | number } = {
   width: "50%",
 };
 const pageLabel = "Detail Page";
-const labelHomeButton ="<-- Go to HomePage"
+const labelHomeButton = "<-- Go to HomePage";
 
 const DetailPage = () => {
   let initialState = {
@@ -54,7 +57,7 @@ const DetailPage = () => {
     const id = window.location.href.split("/detail/")[1];
     setState({ ...state, isLoading: true });
     getEstablishmentDetail(id).then(
-      (result) => {
+      (result: EstablishmentsType) => {
         setState({ ...state, data: result?.establishments, isLoading: false });
       },
       (error) => {
@@ -80,7 +83,9 @@ const DetailPage = () => {
             if (state?.data.length > 0 && state?.data !== undefined) {
               switch (attr) {
                 case "RatingDate":
-                  return <div key={index}>Date: {getDate(state.data[0][attr])}</div>;
+                  return (
+                    <div key={index}>Date: {getDate(state.data[0][attr])}</div>
+                  );
                 case "RatingValue":
                   return <div key={index}>Rating: {state.data[0][attr]}</div>;
                 default:

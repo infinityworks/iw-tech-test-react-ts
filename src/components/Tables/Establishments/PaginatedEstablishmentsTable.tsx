@@ -4,6 +4,7 @@ import { EstablishmentsTableNavigation } from "./EstablishmentsTableNavigation";
 import {
   getEstablishmentRatings,
   getFilteredEstablishmentRatings,
+  EstablishmentsType,
 } from "../../../services/ratingsAPI";
 import { FavoriteContext } from "../../../App";
 
@@ -17,7 +18,7 @@ const tableStyle = {
 
 const labelFood = "Food Hygiene Ratings";
 
-export const PaginatedEstablishmentsTable: React.FC<{
+interface Props {
   pageNum: number;
   setPageNum: any;
   error: any;
@@ -27,7 +28,9 @@ export const PaginatedEstablishmentsTable: React.FC<{
   resetFilter: boolean;
   setResetFilter: any;
   handleResetFilter: any;
-}> = ({
+}
+
+export const PaginatedEstablishmentsTable: React.FC<Props> = ({
   pageNum,
   setPageNum,
   error,
@@ -82,7 +85,7 @@ export const PaginatedEstablishmentsTable: React.FC<{
         selectedAuthority !== undefined ? selectedAuthority.toString() : "",
         selectedCountry !== undefined ? selectedCountry.toString() : ""
       ).then(
-        (result) => {
+        (result: EstablishmentsType) => {
           setState({
             ...state,
             data: result?.establishments.map((establishment: any) => {
@@ -122,7 +125,7 @@ export const PaginatedEstablishmentsTable: React.FC<{
 
   const getAllEstablishments = async (pageNum: number) => {
     getEstablishmentRatings(pageNum).then(
-      (result) => {
+      (result: EstablishmentsType) => {
         setState({
           ...state,
           data: result?.establishments.map((establishment: any) => {

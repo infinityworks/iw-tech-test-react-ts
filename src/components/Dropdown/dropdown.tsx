@@ -1,5 +1,3 @@
-
-
 const headerStyle: { [key: string]: string | number } = {
   padding: "10px",
   textAlign: "left",

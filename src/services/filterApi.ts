@@ -1,5 +1,11 @@
 export type AuthoritiesType = {
-  authorities: {}[];
+  authorities: {
+    EstablishmentCount: number;
+    LocalAuthorityId: number;
+    LocalAuthorityIdCode: string;
+    Name: string;
+    SchemeType: number;
+  }[];
   meta: {
     dataSource: string;
     extractDate: string;
@@ -19,7 +25,13 @@ export type AuthoritiesType = {
 };
 
 export type CountriesType = {
-  countries: {}[];
+  countries: {
+    code: string;
+    id: number;
+    links: [{ rel: string; href: string }];
+    name: string;
+    nameKey: string;
+  }[];
   meta: {
     dataSource: string;
     extractDate: string;

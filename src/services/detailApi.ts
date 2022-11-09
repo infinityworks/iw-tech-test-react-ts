@@ -1,5 +1,30 @@
 export type EstablishmentsType = {
-  establishments: {};
+  establishments: {
+    FHRSID: number;
+    ChangesByServerID: number;
+    LocalAuthorityBusinessID: string;
+    BusinessName: string;
+    BusinessType: string;
+    BusinessTypeID: number;
+    AddressLine1: string;
+    AddressLine2: string;
+    AddressLine3: string;
+    AddressLine4: string;
+    PostCode: string;
+    Phone: string;
+    RatingValue: string;
+    RatingKey: string;
+    RatingDate: string;
+    LocalAuthorityCode: string;
+    LocalAuthorityName: string;
+    LocalAuthorityWebSite: string;
+    LocalAuthorityEmailAddress: string;
+    scores: {
+      Hygiene: null | number | string;
+      Structural: null | number | string;
+      ConfidenceInManagement: null | number | string;
+    };
+  };
   meta: {
     dataSource: string;
     extractDate: string;

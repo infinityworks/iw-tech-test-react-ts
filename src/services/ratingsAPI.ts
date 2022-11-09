@@ -1,5 +1,18 @@
 export type EstablishmentsType = {
-  establishments: {}[];
+  establishments: {
+    FHRSID: number;
+    LocalAuthorityBusinessID: string;
+    BusinessName: string;
+    BusinessType: string;
+    RatingValue: string;
+    RatingDate: string;
+    links: [
+      {
+        rel: string;
+        href: string;
+      }
+    ];
+  }[];
   meta: {
     dataSource: string;
     extractDate: string;
