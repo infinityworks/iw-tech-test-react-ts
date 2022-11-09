@@ -15,7 +15,7 @@ const Checkbox: React.FC<Props> = ({
       id={indexRow.toString()}
       type="checkbox"
       onChange={() => onChange(defaulteEstablishment.isFavorite, indexRow)}
-      checked={defaulteEstablishment.isFavorite}
+      // checked={defaulteEstablishment.isFavorite}
       value ={defaulteEstablishment.isFavorite}
     />
   );
