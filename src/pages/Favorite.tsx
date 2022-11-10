@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { FavoriteContext, FavoriteDeletionContext } from "../App";
 import { FavoriteTable } from "../components/Tables/Favorite/FavoriteTable";
 
@@ -33,7 +33,7 @@ type EstablishmentsType = {
       href: string;
     }
   ];
-}
+};
 
 const Favorite = () => {
   const { favorite, setFavorite } = useContext(FavoriteContext);
@@ -67,6 +67,9 @@ const Favorite = () => {
     }
   };
 
+  useEffect(() => {
+    console.log(favorite);
+  }, [favorite]);
   return (
     <div style={tableStyle}>
       <h3 style={headerStyle}> {pageLabel}</h3>

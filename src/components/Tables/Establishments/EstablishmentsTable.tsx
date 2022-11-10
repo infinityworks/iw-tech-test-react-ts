@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { EstablishmentsTableRow } from "./EstablishmentsTableRow";
 import { FavoriteContext, FavoriteDeletionContext } from "../../../App";
+import PropTypes from "prop-types";
 
 const headerStyle: { [key: string]: string | number } = {
   paddingBottom: "10px",
@@ -26,31 +27,42 @@ export const EstablishmentsTable: React.FC<{
 
   const handleChange = (isFavorite: boolean, i: number) => {
     const id = parseInt(state.data[i].FHRSID);
+
     if (Boolean(state.data[i].isFavorite) === false) {
       // putting defaulteEstablishment into favorite context
       const index = favorite.findIndex((fav: any) => {
         return fav.FHRSID === id;
       });
+      // mapping to big payload
+      const data = state.data.map((fav: any) => {
+        if (fav.FHRSID === id) {
+          fav.isFavorite = true;
+        }
+        return fav;
+      });
+      setState({ ...state, data: data });
+
       if (index === -1) setFavorite([...favorite, state.data[i]]);
     } else if (Boolean(state.data[i].isFavorite) === true) {
+      // mapping to big payload
+      const data = state.data.map((fav: any) => {
+        if (fav.FHRSID === id) {
+          fav.isFavorite = false;
+        }
+        return fav;
+      });
+      setState({ ...state, data: data });
       // putting defaulteEstablishment into favorite context
       const filtered = favorite.filter((obj: any) => obj.FHRSID !== id);
       if (filtered.length === 0) setFavorite([]);
       setFavorite(filtered);
     }
-    //setting state
-    let tmp: any = state.data[i];
-    tmp.isFavorite = !isFavorite;
-    let todosClone: any = [...state.data];
-    todosClone[i] = tmp;
-    setState({ ...state, data: [...todosClone] });
   };
 
   useEffect(() => {
     const index = state.data.findIndex((val) => {
       return val.FHRSID === favoriteDeletion;
     });
-
     if (
       index !== -1 &&
       favoriteDeletion !== 0 &&
@@ -60,14 +72,9 @@ export const EstablishmentsTable: React.FC<{
         ...state,
         data: state.data.map((val: any) => {
           if (val.FHRSID === favoriteDeletion) {
-            console.log(`index: ${index}`);
-            console.log(`FH: ${val.FHRSID}`);
-            console.log(`favorite: ${favoriteDeletion}`);
-            console.log(`Val before: ${val.isFavorite}`);
             val.isFavorite = !val.isFavorite;
-            console.log(val);
-            return val
-          }else return val;
+            return val;
+          } else return val;
         }),
       });
       setFavoriteDeletion(0);
@@ -116,3 +123,17 @@ export const EstablishmentsTable: React.FC<{
     </table>
   );
 };
+
+//[key: PropTypes.string.isRequired]: PropTypes.string.isRequired
+// EstablishmentsTable.propTypes = {
+//   state: {
+//     data: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+//     headerAttr: {
+//       BusinessName: PropTypes.string.isRequired,
+//       RatingValue: PropTypes.string.isRequired,
+//       Favorite: PropTypes.string.isRequired,
+//     },
+//     isLoading: PropTypes.bool.isRequired,
+//   },
+//   setState: PropTypes.func.isRequired,
+// };
