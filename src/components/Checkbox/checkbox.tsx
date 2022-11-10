@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 interface Props {
   defaulteEstablishment: { [key: string]: any };
   onChange: any;
@@ -21,3 +23,10 @@ const Checkbox: React.FC<Props> = ({
   );
 };
 export default Checkbox;
+
+
+Checkbox.propTypes = {
+  defaulteEstablishment: PropTypes.object.isRequired,
+  onChange: PropTypes.func.isRequired,
+  indexRow: PropTypes.number.isRequired,
+};
