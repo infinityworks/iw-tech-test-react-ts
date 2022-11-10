@@ -26,9 +26,9 @@ WebUI.maximizeWindow()
 WebUI.selectOptionByValue(findTestObject('Object Repository/Page_IW React Tech Test/select_EnglandNorthern IrelandScotlandWales (1)'), 
     '4', true)
 
-WebUI.waitForElementPresent(findTestObject('Object Repository/Page_IW React Tech Test/td_Caws'), 0)
+WebUI.waitForElementVisible(findTestObject('Object Repository/Page_IW React Tech Test/td_Caws'), 0)
 
-WebUI.verifyElementPresent(findTestObject('Page_IW React Tech Test/td_Caws'), 0)
+WebUI.verifyElementVisible(findTestObject('Page_IW React Tech Test/td_Caws'), FailureHandling.STOP_ON_FAILURE)
 
 WebUI.closeBrowser()
 

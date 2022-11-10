@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>td_La Sainte Union Convent School</name>
+   <name>button_Remove</name>
    <tag></tag>
-   <elementGuidId>f6879fac-b7dc-4c25-a9f4-5d7bf9c218e0</elementGuidId>
+   <elementGuidId>8b77d1ea-df20-4b7c-9c89-807d8be02a95</elementGuidId>
    <selectorCollection>
       <entry>
          <key>XPATH</key>
-         <value></value>
+         <value>//button[@id='1011426']</value>
       </entry>
       <entry>
          <key>CSS</key>
-         <value>#1011426</value>
+         <value></value>
       </entry>
    </selectorCollection>
    <selectorMethod>XPATH</selectorMethod>
@@ -21,7 +21,7 @@
       <matchCondition>equals</matchCondition>
       <name>tag</name>
       <type>Main</type>
-      <value>td</value>
+      <value>button</value>
    </webElementProperties>
    <webElementProperties>
       <isSelected>true</isSelected>
@@ -35,69 +35,55 @@
       <matchCondition>equals</matchCondition>
       <name>text</name>
       <type>Main</type>
-      <value>&quot;La Sainte Union Convent School&quot;</value>
+      <value>Remove</value>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>id(&quot;1011426&quot;)</value>
+      <value>id(&quot;root&quot;)/div[1]/aside[1]/table[1]/tbody[1]/tr[2]/td[3]/button[@id=&quot;1011426&quot;]</value>
    </webElementProperties>
    <webElementXpaths>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath:attributes</name>
       <type>Main</type>
-      <value>//td[@id='1011426']</value>
+      <value>//button[@id='1011426']</value>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath:idRelative</name>
       <type>Main</type>
-      <value>//div[@id='root']/section/main/table/tbody/tr[2]/td</value>
+      <value>//div[@id='root']/div/aside/table/tbody/tr[2]/td[3]/button</value>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath:neighbor</name>
       <type>Main</type>
-      <value>(.//*[normalize-space(text()) and normalize-space(.)='Favorite'])[1]/following::td[1]</value>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)=concat('', '&quot;', 'La Sainte Union Convent School', '&quot;', '')])[2]/following::button[1]</value>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath:neighbor</name>
       <type>Main</type>
-      <value>(.//*[normalize-space(text()) and normalize-space(.)='RatingValue'])[1]/following::td[1]</value>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='Favorite'])[2]/following::button[1]</value>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath:neighbor</name>
       <type>Main</type>
-      <value>(.//*[normalize-space(text()) and normalize-space(.)=concat('', '&quot;', 'Mills Hill Infant School', '&quot;', ',')])[1]/preceding::td[3]</value>
-   </webElementXpaths>
-   <webElementXpaths>
-      <isSelected>false</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>xpath:neighbor</name>
-      <type>Main</type>
-      <value>(.//*[normalize-space(text()) and normalize-space(.)=concat('', '&quot;', 'Olive Branch', '&quot;', ' Edgeley Food Bank')])[1]/preceding::td[6]</value>
-   </webElementXpaths>
-   <webElementXpaths>
-      <isSelected>false</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>xpath:neighbor</name>
-      <type>Main</type>
-      <value>//*/text()[normalize-space(.)='&quot;La Sainte Union Convent School&quot;']/parent::*</value>
+      <value>//*/text()[normalize-space(.)='Remove']/parent::*</value>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath:position</name>
       <type>Main</type>
-      <value>//td</value>
+      <value>//td[3]/button</value>
    </webElementXpaths>
 </WebElementEntity>

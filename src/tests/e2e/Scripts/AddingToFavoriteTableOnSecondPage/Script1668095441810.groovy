@@ -23,17 +23,23 @@ WebUI.navigateToUrl('http://localhost:3000/')
 
 WebUI.maximizeWindow()
 
-WebUI.waitForElementVisible(findTestObject('Page_IW React Tech Test/input'), 0)
+WebUI.waitForElementVisible(findTestObject('Page_IW React Tech Test/td_ THE ARGENTINIAN'), 0)
+
+WebUI.click(findTestObject('Object Repository/Page_IW React Tech Test/button_'))
+
+WebUI.waitForElementVisible(findTestObject('Object Repository/Page_IW React Tech Test/td_La Sainte Union Convent School'), 
+    0)
 
 WebUI.click(findTestObject('Object Repository/Page_IW React Tech Test/input'))
 
-WebUI.waitForElementVisible(findTestObject('Object Repository/Page_IW React Tech Test/td_ THE ARGENTINIAN'), 0)
+WebUI.waitForElementVisible(findTestObject('Object Repository/Page_IW React Tech Test/td_La Sainte Union Convent School'), 
+    0)
+
+WebUI.waitForElementVisible(findTestObject('Object Repository/Page_IW React Tech Test/button_Remove'), 0)
 
 WebUI.click(findTestObject('Object Repository/Page_IW React Tech Test/button_Remove'))
 
 WebUI.waitForElementVisible(findTestObject('Object Repository/Page_IW React Tech Test/td_Nothing to display'), 0)
-
-WebUI.verifyElementVisible(findTestObject('Page_IW React Tech Test/td_Nothing to display'))
 
 WebUI.waitForElementVisible(findTestObject('Page_IW React Tech Test/input'), 0)
 

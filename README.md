@@ -12,9 +12,8 @@
 ---
 
 ## 📝 Table of Contents
-
-- [Getting Started](#getting_started)
 - [Requirements](#requirements)
+- [Getting Started](#getting_started)
 - [Deployment](#deployment)
 
 ## 🤔 Requirements <a name = "requirements"></a>
@@ -23,7 +22,8 @@
 - Access to the Internet
 - Suitable development environment
 - Docker
-- ##### Node.JS v14.20.1
+- Katalon
+- Node.JS v14.20.1
 
 ## 🏁 Getting Started <a name = "getting_started"></a>
 
@@ -58,7 +58,7 @@
   https://testops.katalon.io/login
 
   #### Authethification
-
+  - this authetification is for WebSite and for Katalon program as well
   login: filip.reichl.work@gmail.com
   password: Jozko-mrkvicka1596
 
@@ -68,3 +68,12 @@
 
   for Mac -> https://download.katalon.com/8.5.2/Katalon%20Studio%20PE.dmg
   for Win -> https://download.katalon.com/8.5.2/Katalon_Studio_PE_Windows_64-8.5.2.zip
+
+  #### Importing Project and running tests
+
+  You need to copy the path to e2e test in our test folder `.../tests/e2e`. Put path to into Katalon, when you are importing new project. After that, only thing you need to do is open test cases folder inside tests explorer, then open All Test Cases and run them. ▶️
+
+
+## 🔮 For The Future 🤖
+- use Story Book to document and test components
+https://storybook.js.org/

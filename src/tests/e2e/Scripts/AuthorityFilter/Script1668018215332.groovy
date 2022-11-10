@@ -28,7 +28,7 @@ WebUI.selectOptionByValue(findTestObject('Object Repository/Page_IW React Tech T
 
 WebUI.waitForElementVisible(findTestObject('Page_IW React Tech Test/td_1  30 DONALD DEWAR COURT'), 0)
 
-WebUI.verifyElementPresent(findTestObject('Page_IW React Tech Test/td_1  30 DONALD DEWAR COURT'), 0)
+WebUI.verifyElementVisible(findTestObject('Page_IW React Tech Test/td_1  30 DONALD DEWAR COURT'), FailureHandling.STOP_ON_FAILURE)
 
 WebUI.closeBrowser()
 

@@ -17,27 +17,17 @@ import com.kms.katalon.core.windows.keyword.WindowsBuiltinKeywords as Windows
 import internal.GlobalVariable as GlobalVariable
 import org.openqa.selenium.Keys as Keys
 
-WebUI.openBrowser('')
+WebUI.callTestCase(findTestCase('HomePage'), [:], FailureHandling.STOP_ON_FAILURE)
 
-WebUI.navigateToUrl('http://localhost:3000/')
+WebUI.callTestCase(findTestCase('Next Page'), [:], FailureHandling.STOP_ON_FAILURE)
 
-WebUI.maximizeWindow()
+WebUI.callTestCase(findTestCase('DetailPage'), [:], FailureHandling.STOP_ON_FAILURE)
 
-WebUI.waitForElementVisible(findTestObject('Page_IW React Tech Test/input'), 0)
+WebUI.callTestCase(findTestCase('AuthorityFilter'), [:], FailureHandling.STOP_ON_FAILURE)
 
-WebUI.click(findTestObject('Object Repository/Page_IW React Tech Test/input'))
+WebUI.callTestCase(findTestCase('CategoriesFilter'), [:], FailureHandling.STOP_ON_FAILURE)
 
-WebUI.waitForElementVisible(findTestObject('Object Repository/Page_IW React Tech Test/td_ THE ARGENTINIAN'), 0)
+WebUI.callTestCase(findTestCase('AddingToFavoriteTableOnFirstPage'), [:], FailureHandling.STOP_ON_FAILURE)
 
-WebUI.click(findTestObject('Object Repository/Page_IW React Tech Test/button_Remove'))
-
-WebUI.waitForElementVisible(findTestObject('Object Repository/Page_IW React Tech Test/td_Nothing to display'), 0)
-
-WebUI.verifyElementVisible(findTestObject('Page_IW React Tech Test/td_Nothing to display'))
-
-WebUI.waitForElementVisible(findTestObject('Page_IW React Tech Test/input'), 0)
-
-WebUI.verifyElementNotChecked(findTestObject('Object Repository/Page_IW React Tech Test/input'), 0)
-
-WebUI.closeBrowser()
+WebUI.callTestCase(findTestCase('AddingToFavoriteTableOnSecondPage'), [:], FailureHandling.STOP_ON_FAILURE)
 
