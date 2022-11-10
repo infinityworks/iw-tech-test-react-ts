@@ -1,10 +1,8 @@
 import { useState, useEffect } from "react";
-import {
-  getEstablishmentDetail,
-  EstablishmentsType,
-} from "../services/detailApi";
+import { getEstablishmentDetail } from "../services/detailApi";
 import { useNavigate } from "react-router-dom";
 import { getDate } from "../services/helper";
+import { EstablishmentsType } from "../types/Establishment";
 
 const headerStyle: { [key: string]: string | number } = {
   padding: "10px",
@@ -14,10 +12,11 @@ const headerStyle: { [key: string]: string | number } = {
   opacity: "1",
 };
 
-const backgroundStyled: { [key: string]: string | number } = {
+const backgroundStyled = {
   background: "rgba(214,86,34,0.3)",
   width: "50%",
 };
+
 const pageLabel = "Detail Page";
 const labelHomeButton = "<-- Go to HomePage";
 

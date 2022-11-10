@@ -4,9 +4,12 @@ import { EstablishmentsTableNavigation } from "./EstablishmentsTableNavigation";
 import {
   getEstablishmentRatings,
   getFilteredEstablishmentRatings,
-  EstablishmentsType,
 } from "../../../services/ratingsAPI";
 import { FavoriteContext } from "../../../App";
+import {
+  Establishment,
+  EstablishmentsType,
+} from "../../../types/Establishment";
 
 const tableStyle = {
   background: "rgba(51, 51, 51, 0.9)",
@@ -30,7 +33,7 @@ interface Props {
   handleResetFilter: any;
 }
 
-export const PaginatedEstablishmentsTable: React.FC<Props> = ({
+export const PaginatedEstablishmentsTable = ({
   pageNum,
   setPageNum,
   error,
@@ -40,7 +43,7 @@ export const PaginatedEstablishmentsTable: React.FC<Props> = ({
   resetFilter,
   setResetFilter,
   handleResetFilter,
-}) => {
+}: Props) => {
   let initialState = {
     data: [],
     headerAttr: {
@@ -51,7 +54,7 @@ export const PaginatedEstablishmentsTable: React.FC<Props> = ({
     isLoading: false,
   };
   const [state, setState] = useState<{
-    data: { [key: string]: string }[];
+    data: Establishment[];
     headerAttr: { BusinessName: string; RatingValue: string; Favorite: string };
     isLoading: boolean;
   }>(initialState);

@@ -1,3 +1,6 @@
+import { Establishment } from "../../../types/Establishment";
+import {ATRIBUTE_TYPES} from "../../../types/enum";
+
 const styledValues: { [key: string]: string | number } = {
   paddingBottom: "10px",
   textAlign: "left",
@@ -5,48 +8,60 @@ const styledValues: { [key: string]: string | number } = {
 };
 
 interface Props {
-  establishment: { [key: string]: any } | null | undefined;
-  handleDelete?: any;
+  establishment: Establishment;
+  handleDelete: (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    id: number
+  ) => void;
   headerAttr: { BusinessName: string; RatingValue: string; Favorite: string };
 }
 
 const buttonLabel = "Remove";
 
-export const FavoriteTableRow: React.FC<Props> = ({
+export const FavoriteTableRow = ({
   establishment,
   handleDelete,
   headerAttr,
-}) => {
+}: Props) => {
   return (
     <tr>
-      {Object.keys(headerAttr).map((attr: string, index: number) => {
-        if (establishment !== undefined && establishment !== null) {
-          switch (attr) {
-            case "BusinessName":
-              return (
-                <td id={establishment.FHRSID} key={index} style={styledValues}>
-                  {establishment[attr]}
-                </td>
-              );
-            case "RatingValue":
-              return (
-                <td key={index} style={styledValues}>
-                  {establishment[attr]}
-                </td>
-              );
-            case "Favorite":
-              return (
-                <td key={index}>
-                  <button id={establishment.FHRSID} onClick={handleDelete}>
-                    {buttonLabel}
-                  </button>
-                </td>
-              );
-            default:
-              return null;
-          }
-        } else return null;
-      })}
+      {establishment !== undefined && establishment !== null
+        ? Object.keys(headerAttr).map((attr: string, index: number) => {
+            switch (attr) {
+              case ATRIBUTE_TYPES.BUSINESS_NAME:
+                return (
+                  <td
+                    id={establishment.FHRSID.toString()}
+                    key={index}
+                    style={styledValues}
+                  >
+                    {establishment[attr]}
+                  </td>
+                );
+              case ATRIBUTE_TYPES.RATING_VALUE:
+                return (
+                  <td key={index} style={styledValues}>
+                    {establishment[attr]}
+                  </td>
+                );
+              case ATRIBUTE_TYPES.FAVORITE:
+                return (
+                  <td key={index}>
+                    <button
+                      id={establishment.FHRSID.toString()}
+                      onClick={(
+                        event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+                      ) => handleDelete(event, establishment.FHRSID)}
+                    >
+                      {buttonLabel}
+                    </button>
+                  </td>
+                );
+              default:
+                return null;
+            }
+          })
+        : null}
     </tr>
   );
 };

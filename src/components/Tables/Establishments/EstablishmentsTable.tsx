@@ -1,7 +1,7 @@
-import React, { useContext, useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { EstablishmentsTableRow } from "./EstablishmentsTableRow";
 import { FavoriteContext, FavoriteDeletionContext } from "../../../App";
-import PropTypes from "prop-types";
+import { Establishment } from "../../../types/Establishment";
 
 const headerStyle: { [key: string]: string | number } = {
   paddingBottom: "10px",
@@ -12,22 +12,22 @@ const headerStyle: { [key: string]: string | number } = {
 const labelLoading = "Loading ...";
 const labelEmpty = "Nothing to display";
 
-export const EstablishmentsTable: React.FC<{
+interface Props {
   state: {
-    data: { [key: string]: string }[];
+    data: Establishment[];
     headerAttr: { BusinessName: string; RatingValue: string; Favorite: string };
     isLoading: boolean;
   };
   setState: any;
-}> = ({ state, setState }) => {
+}
+export const EstablishmentsTable = ({ state, setState }: Props) => {
   const { favorite, setFavorite } = useContext(FavoriteContext);
   const { favoriteDeletion, setFavoriteDeletion } = useContext(
     FavoriteDeletionContext
   );
 
   const handleChange = (isFavorite: boolean, i: number) => {
-    const id = parseInt(state.data[i].FHRSID);
-
+    const id = state.data[i].FHRSID;
     if (Boolean(state.data[i].isFavorite) === false) {
       // putting defaulteEstablishment into favorite context
       const index = favorite.findIndex((fav: any) => {
@@ -99,21 +99,16 @@ export const EstablishmentsTable: React.FC<{
           </tr>
         ) : null}
         {state.data && state.data.length > 0 && state.isLoading === false ? (
-          state.data.map(
-            (
-              establishment: { [key: string]: string } | null | undefined,
-              indexRow: number
-            ) => (
-              <EstablishmentsTableRow
-                indexRow={indexRow}
-                establishment={establishment}
-                headerAttr={state.headerAttr}
-                setState={setState}
-                state={state}
-                handleChange={handleChange}
-              />
-            )
-          )
+          state.data.map((establishment: Establishment, indexRow: number) => (
+            <EstablishmentsTableRow
+              indexRow={indexRow}
+              establishment={establishment}
+              headerAttr={state.headerAttr}
+              setState={setState}
+              state={state}
+              handleChange={handleChange}
+            />
+          ))
         ) : state.data?.length === 0 ? (
           <tr>
             <td>{labelEmpty}</td>
@@ -123,17 +118,3 @@ export const EstablishmentsTable: React.FC<{
     </table>
   );
 };
-
-//[key: PropTypes.string.isRequired]: PropTypes.string.isRequired
-// EstablishmentsTable.propTypes = {
-//   state: {
-//     data: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
-//     headerAttr: {
-//       BusinessName: PropTypes.string.isRequired,
-//       RatingValue: PropTypes.string.isRequired,
-//       Favorite: PropTypes.string.isRequired,
-//     },
-//     isLoading: PropTypes.bool.isRequired,
-//   },
-//   setState: PropTypes.func.isRequired,
-// };

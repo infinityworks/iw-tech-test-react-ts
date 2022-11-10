@@ -1,54 +1,5 @@
-export type AuthoritiesType = {
-  authorities: {
-    EstablishmentCount: number;
-    LocalAuthorityId: number;
-    LocalAuthorityIdCode: string;
-    Name: string;
-    SchemeType: number;
-  }[];
-  meta: {
-    dataSource: string;
-    extractDate: string;
-    itemCount: number;
-    returncode: string;
-    totalCount: number;
-    totalPages: number;
-    pageSize: number;
-    pageNumber: number;
-  };
-  links: [
-    {
-      rel: string;
-      href: string;
-    }
-  ];
-};
-
-export type CountriesType = {
-  countries: {
-    code: string;
-    id: number;
-    links: [{ rel: string; href: string }];
-    name: string;
-    nameKey: string;
-  }[];
-  meta: {
-    dataSource: string;
-    extractDate: string;
-    itemCount: number;
-    returncode: string;
-    totalCount: number;
-    totalPages: number;
-    pageSize: number;
-    pageNumber: number;
-  };
-  links: [
-    {
-      rel: string;
-      href: string;
-    }
-  ];
-};
+import { AuthoritiesType } from "../types/Authority";
+import { CountriesType } from "../types/Country";
 
 const api = process.env.REACT_APP_API_BASE_URL;
 const param = {

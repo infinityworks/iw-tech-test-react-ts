@@ -1,4 +1,5 @@
 import { FavoriteTableRow } from "./FavoriteTableRow";
+import { Establishment } from "../../../types/Establishment";
 
 const headerStyle: { [key: string]: string | number } = {
   padding: "10px",
@@ -10,11 +11,15 @@ const headerStyle: { [key: string]: string | number } = {
 
 const labelEmpty = "Nothing to display";
 
-export const FavoriteTable: React.FC<{
-  data: { [key: string]: string }[];
+interface Props {
+  data: Establishment[];
   headerAttr: { BusinessName: string; RatingValue: string; Favorite: string };
-  handleDelete:any;
-}> = ({ data, headerAttr,handleDelete }) => {
+  handleDelete: (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    id: number
+  ) => void;
+}
+export const FavoriteTable = ({ data, headerAttr, handleDelete }: Props) => {
   return (
     <table>
       <tbody>
@@ -28,19 +33,14 @@ export const FavoriteTable: React.FC<{
           })}
         </tr>
         {data && data.length > 0 ? (
-          data.map(
-            (
-              establishment: { [key: string]: string } | null | undefined,
-              index: React.Key | null | undefined
-            ) => (
-              <FavoriteTableRow
-                key={index}
-                establishment={establishment}
-                headerAttr={headerAttr}
-                handleDelete={handleDelete}
-              />
-            )
-          )
+          data.map((establishment: Establishment, index: number) => (
+            <FavoriteTableRow
+              key={index}
+              establishment={establishment}
+              headerAttr={headerAttr}
+              handleDelete={handleDelete}
+            />
+          ))
         ) : data?.length === 0 ? (
           <tr>
             <td>{labelEmpty}</td>

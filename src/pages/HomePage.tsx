@@ -1,12 +1,9 @@
 import { useEffect, useState } from "react";
 import { PaginatedEstablishmentsTable } from "../components/Tables/Establishments/PaginatedEstablishmentsTable";
-import {
-  getAuthorities,
-  getCountries,
-  AuthoritiesType,
-  CountriesType,
-} from "../services/filterApi";
+import { getAuthorities, getCountries } from "../services/filterApi";
 import Dropdown from "../components/Dropdown/dropdown";
+import { Authority } from "../types/Authority";
+import { Country } from "../types/Country";
 
 const filterStyle: { [key: string]: string | number } = {
   padding: "10px",
@@ -37,10 +34,8 @@ const HomePage = () => {
     [key: string]: string;
   }>();
   const [pageNum, setPageNum] = useState(1);
-  const [authorities, setAuthorities] = useState<{ [key: string]: string }[]>(
-    []
-  );
-  const [countries, setCountries] = useState<{ [key: string]: string }[]>([]);
+  const [authorities, setAuthorities] = useState<Authority[]>([]);
+  const [countries, setCountries] = useState<Country[]>([]);
   const [selectedCountry, setSelectedCountry] = useState("");
   const [selectedAuthority, setSelectedAuthority] = useState("");
   const [selectedCountryValue, setSelectedCountryValue] = useState("");
@@ -55,8 +50,21 @@ const HomePage = () => {
 
   const getAuthoritiesFunction = async () => {
     getAuthorities().then(
-      (res: AuthoritiesType) => {
-        setAuthorities([{ Name: "" }].concat(res.authorities));
+      (res: any) => {
+        const data: Authority = {
+          EstablishmentCount: 0,
+          LocalAuthorityId: 0,
+          LocalAuthorityIdCode: "",
+          Name: "",
+          SchemeType: 0,
+          links: [
+            {
+              rel: "",
+              href: "",
+            },
+          ],
+        };
+        setAuthorities([data].concat(res.authorities));
       },
       (error) => {
         setError(error);
@@ -65,8 +73,15 @@ const HomePage = () => {
   };
   const getCountriesFunction = async () => {
     getCountries().then(
-      (res: CountriesType) => {
-        setCountries([{ name: "" }].concat(res.countries));
+      (res: any) => {
+        const data: Country = {
+          code: "",
+          id: 0,
+          links: [{ rel: "", href: "" }],
+          name: "",
+          nameKey: "",
+        };
+        setCountries([data].concat(res.countries));
       },
       (error) => {
         setError(error);
@@ -74,16 +89,16 @@ const HomePage = () => {
     );
   };
 
-  const handleCountry = (event: any) => {
+  const handleCountry = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const index = parseInt(event.target.value);
     if (index !== undefined && countries[index].id !== undefined) {
-      setSelectedCountry(countries[index].id);
-      setSelectedCountryValue(countries[index].id);
+      setSelectedCountry(countries[index].id.toString());
+      setSelectedCountryValue(countries[index].id.toString());
       setPageNum(1);
     }
   };
 
-  const handleAuthorities = (event: any) => {
+  const handleAuthorities = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const index = parseInt(event.target.value);
     if (
       index !== undefined &&

@@ -1,6 +1,7 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { FavoriteContext, FavoriteDeletionContext } from "../App";
 import { FavoriteTable } from "../components/Tables/Favorite/FavoriteTable";
+import { Establishment } from "../types/Establishment";
 
 const tableStyle = {
   background: "rgba(51, 51, 51, 0.9)",
@@ -20,21 +21,6 @@ const headerStyle: { [key: string]: string | number } = {
 
 const pageLabel = "Favorite Table";
 
-type EstablishmentsType = {
-  FHRSID: number;
-  LocalAuthorityBusinessID: string;
-  BusinessName: string;
-  BusinessType: string;
-  RatingValue: string;
-  RatingDate: string;
-  links: [
-    {
-      rel: string;
-      href: string;
-    }
-  ];
-};
-
 const Favorite = () => {
   const { favorite, setFavorite } = useContext(FavoriteContext);
   const { setFavoriteDeletion } = useContext(FavoriteDeletionContext);
@@ -53,13 +39,16 @@ const Favorite = () => {
     isLoading: boolean;
   }>(initialState);
 
-  const handleDelete = (e: React.ChangeEvent<HTMLButtonElement>) => {
-    if (e !== undefined) {
-      const id = e.target.getAttribute("id");
+  const handleDelete = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    id: number
+  ) => {
+    if (event !== undefined) {
+      // const id = event.currentTarget.getAttribute("id");
       if (id !== null) {
-        const filtered = favorite.filter((obj: EstablishmentsType) => {
-          if (obj.FHRSID === parseInt(id)) setFavoriteDeletion(obj.FHRSID);
-          return obj.FHRSID !== parseInt(id);
+        const filtered = favorite.filter((obj: Establishment) => {
+          if (obj.FHRSID === id) setFavoriteDeletion(obj.FHRSID);
+          return obj.FHRSID !== id;
         });
         if (filtered.length === 0) setFavorite([]);
         setFavorite(filtered);
@@ -67,9 +56,6 @@ const Favorite = () => {
     }
   };
 
-  useEffect(() => {
-    console.log(favorite);
-  }, [favorite]);
   return (
     <div style={tableStyle}>
       <h3 style={headerStyle}> {pageLabel}</h3>
