@@ -9,7 +9,7 @@ const headerStyle: { [key: string]: string | number } = {
 const Dropdown: React.FC<{
   name: string;
   label: string;
-  onChange: any;
+  onChange: React.ChangeEventHandler<HTMLSelectElement>;
   value: string;
   options: {}[];
   optionLabel: string;

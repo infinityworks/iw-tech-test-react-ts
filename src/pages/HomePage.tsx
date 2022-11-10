@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { PaginatedEstablishmentsTable } from "../components/Tables/Establishments/PaginatedEstablishmentsTable";
 import {
   getAuthorities,
@@ -74,8 +74,8 @@ const HomePage = () => {
     );
   };
 
-  const handleCountry = (e: any) => {
-    const index = parseInt(e.target.value);
+  const handleCountry = (event: any) => {
+    const index = parseInt(event.target.value);
     if (index !== undefined && countries[index].id !== undefined) {
       setSelectedCountry(countries[index].id);
       setSelectedCountryValue(countries[index].id);
@@ -83,8 +83,8 @@ const HomePage = () => {
     }
   };
 
-  const handleAuthorities = (e: any) => {
-    const index = parseInt(e.target.value);
+  const handleAuthorities = (event: any) => {
+    const index = parseInt(event.target.value);
     if (
       index !== undefined &&
       authorities[index].LocalAuthorityId !== undefined

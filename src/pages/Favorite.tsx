@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import React, { useContext, useState } from "react";
 import { FavoriteContext, FavoriteDeletionContext } from "../App";
 import { FavoriteTable } from "../components/Tables/Favorite/FavoriteTable";
 
@@ -11,7 +11,6 @@ const tableStyle = {
   color: "white",
 };
 const headerStyle: { [key: string]: string | number } = {
-
   padding: "10px",
   textAlign: "left",
   fontSize: "20px",
@@ -20,6 +19,21 @@ const headerStyle: { [key: string]: string | number } = {
 };
 
 const pageLabel = "Favorite Table";
+
+type EstablishmentsType = {
+  FHRSID: number;
+  LocalAuthorityBusinessID: string;
+  BusinessName: string;
+  BusinessType: string;
+  RatingValue: string;
+  RatingDate: string;
+  links: [
+    {
+      rel: string;
+      href: string;
+    }
+  ];
+}
 
 const Favorite = () => {
   const { favorite, setFavorite } = useContext(FavoriteContext);
@@ -39,15 +53,17 @@ const Favorite = () => {
     isLoading: boolean;
   }>(initialState);
 
-  const handleDelete = (e: any) => {
+  const handleDelete = (e: React.ChangeEvent<HTMLButtonElement>) => {
     if (e !== undefined) {
       const id = e.target.getAttribute("id");
-      const filtered = favorite.filter((obj: any) => {
-        if (obj.FHRSID === parseInt(id)) setFavoriteDeletion(obj.FHRSID);
-        return obj.FHRSID !== parseInt(id);
-      });
-      if (filtered.length === 0) setFavorite([]);
-      setFavorite(filtered);
+      if (id !== null) {
+        const filtered = favorite.filter((obj: EstablishmentsType) => {
+          if (obj.FHRSID === parseInt(id)) setFavoriteDeletion(obj.FHRSID);
+          return obj.FHRSID !== parseInt(id);
+        });
+        if (filtered.length === 0) setFavorite([]);
+        setFavorite(filtered);
+      }
     }
   };
 
