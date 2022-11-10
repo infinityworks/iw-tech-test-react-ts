@@ -10,8 +10,7 @@ const styledValues: { [key: string]: string | number } = {
 interface Props {
   establishment: Establishment;
   handleDelete: (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    id: number
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => void;
   headerAttr: { BusinessName: string; RatingValue: string; Favorite: string };
 }
@@ -51,7 +50,7 @@ export const FavoriteTableRow = ({
                       id={establishment.FHRSID.toString()}
                       onClick={(
                         event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-                      ) => handleDelete(event, establishment.FHRSID)}
+                      ) => handleDelete(event)}
                     >
                       {buttonLabel}
                     </button>

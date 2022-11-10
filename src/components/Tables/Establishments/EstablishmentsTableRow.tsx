@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Checkbox from "../../Checkbox/checkbox";
 import { Establishment } from "../../../types/Establishment";
@@ -34,8 +33,6 @@ export const EstablishmentsTableRow = ({
   indexRow,
 }: Props) => {
   let navigate = useNavigate();
-  const [defaulteEstablishment] = useState(establishment);
-
   const handleNavigate = (e: any) => {
     if (e !== undefined) {
       const id = e.target.getAttribute("id");
@@ -45,24 +42,24 @@ export const EstablishmentsTableRow = ({
 
   return (
     <tr key={indexRow}>
-      {defaulteEstablishment !== undefined && defaulteEstablishment !== null
+      {establishment !== undefined && establishment !== null
         ? Object.keys(headerAttr).map((attr: string, index: number) => {
             switch (attr) {
               case ATRIBUTE_TYPES.BUSINESS_NAME:
                 return (
                   <td
-                    id={defaulteEstablishment.FHRSID.toString()}
+                    id={establishment.FHRSID.toString()}
                     onClick={handleNavigate}
                     key={index}
                     style={styledClickableValues}
                   >
-                    {defaulteEstablishment[attr]}
+                    {establishment[attr]}
                   </td>
                 );
               case ATRIBUTE_TYPES.RATING_VALUE:
                 return (
                   <td key={index} style={styledValues}>
-                    {defaulteEstablishment[attr]}
+                    {establishment[attr]}
                   </td>
                 );
               case ATRIBUTE_TYPES.FAVORITE:
@@ -70,7 +67,7 @@ export const EstablishmentsTableRow = ({
                   <td key={index} style={styledCheckBoxes}>
                     <Checkbox
                       onChange={(event) => handleChange(event, indexRow)}
-                      value={defaulteEstablishment.isFavorite}
+                      value={establishment.isFavorite}
                     />
                   </td>
                 );

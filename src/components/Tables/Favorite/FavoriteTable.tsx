@@ -15,8 +15,7 @@ interface Props {
   data: Establishment[];
   headerAttr: { BusinessName: string; RatingValue: string; Favorite: string };
   handleDelete: (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    id: number
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => void;
 }
 export const FavoriteTable = ({ data, headerAttr, handleDelete }: Props) => {

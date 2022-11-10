@@ -39,16 +39,15 @@ const Favorite = () => {
     isLoading: boolean;
   }>(initialState);
 
-  const handleDelete = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    id: number
-  ) => {
+  const handleDelete = (event: React.MouseEvent<HTMLButtonElement>) => {
     if (event !== undefined) {
-      // const id = event.currentTarget.getAttribute("id");
+      const id = event.currentTarget.getAttribute("id");
       if (id !== null) {
         const filtered = favorite.filter((obj: Establishment) => {
-          if (obj.FHRSID === id) setFavoriteDeletion(obj.FHRSID);
-          return obj.FHRSID !== id;
+          if (obj.FHRSID === parseInt(id)) {
+            setFavoriteDeletion(obj.FHRSID);
+          }
+          return obj.FHRSID !== parseInt(id);
         });
         if (filtered.length === 0) setFavorite([]);
         setFavorite(filtered);
