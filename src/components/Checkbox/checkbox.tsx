@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
 interface Props {
   defaulteEstablishment: { [key: string]: any };
@@ -11,19 +11,23 @@ const Checkbox: React.FC<Props> = ({
   onChange,
   indexRow,
 }) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { checked } = event.target;
+    onChange(checked, indexRow);
+  };
+
   return (
     <input
       key={indexRow}
       id={indexRow.toString()}
       type="checkbox"
-      onChange={() => onChange(defaulteEstablishment.isFavorite, indexRow)}
-      // checked={defaulteEstablishment.isFavorite}
-      value ={defaulteEstablishment.isFavorite}
+      onChange={handleChange}
+      value={defaulteEstablishment.isFavorite}
+      defaultChecked={defaulteEstablishment.isFavorite}
     />
   );
 };
 export default Checkbox;
-
 
 Checkbox.propTypes = {
   defaulteEstablishment: PropTypes.object.isRequired,
