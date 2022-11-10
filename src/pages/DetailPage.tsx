@@ -24,12 +24,12 @@ const DetailPage = () => {
   let initialState = {
     data: [],
     headerAttr: {
-      AddressLine1: "AddressLine1",
-      AddressLine2: "AddressLine2",
-      AddressLine3: "AddressLine3",
-      AddressLine4: "AddressLine4",
-      RatingValue: "RatingValue",
-      RatingDate: "RatingDate",
+      AddressLine1: "Address",
+      AddressLine2: "Address",
+      AddressLine3: "Address",
+      AddressLine4: "Address",
+      RatingValue: "Rating",
+      RatingDate: "Date of Inspection",
     },
     isLoading: false,
   };
@@ -80,15 +80,16 @@ const DetailPage = () => {
           <h1 style={headerStyle}>{pageLabel}</h1>
           {Object.keys(state.headerAttr).map((attr: string, index: number) => {
             if (state?.data.length > 0 && state?.data !== undefined) {
+              const name = Object.values(state.headerAttr)[index]
               switch (attr) {
                 case "RatingDate":
                   return (
-                    <div key={index}>Date: {getDate(state.data[0][attr])}</div>
+                    <div key={index}>{name}: {getDate(state.data[0][attr])}</div>
                   );
                 case "RatingValue":
-                  return <div key={index}>Rating: {state.data[0][attr]}</div>;
+                  return <div key={index}>{name}: {state.data[0][attr]}</div>;
                 default:
-                  return <div key={index}>Address: {state.data[0][attr]}</div>;
+                  return <div key={index}>{name}: {state.data[0][attr]}</div>;
               }
             } else return null;
           })}
