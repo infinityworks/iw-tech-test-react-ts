@@ -44,7 +44,7 @@ export const EstablishmentsTableRow = ({
   };
 
   return (
-    <tr>
+    <tr key={indexRow}>
       {defaulteEstablishment !== undefined && defaulteEstablishment !== null
         ? Object.keys(headerAttr).map((attr: string, index: number) => {
             switch (attr) {
