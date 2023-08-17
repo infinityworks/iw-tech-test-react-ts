@@ -8,6 +8,7 @@ export const tableStyle = {
   padding: "10px",
   width: "max-content",
   marginLeft: "50px",
+  marginTop: "10px",
   color: "white",
 };
 
@@ -66,7 +67,7 @@ export const PaginatedEstablishmentsTable = () => {
   if (error) {
     return <div>Error: {error.message}</div>;
   } else {
-    return (
+    return (<>
       <div style={tableStyle}>
         <h2>Food Hygiene Ratings</h2>
         <EstablishmentsTable establishments={establishments} isLoading={isLoading} />
@@ -77,6 +78,7 @@ export const PaginatedEstablishmentsTable = () => {
           onNextPage={handleNextPage}
         />
       </div>
+    </>
     );
   }
 };
