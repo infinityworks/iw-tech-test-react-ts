@@ -1,5 +1,5 @@
 import { EstablishmentType } from '../types';
-import { buttonStyle } from './EstablishmentPage';
+import { buttonStyle } from '../pages/EstablishmentPage';
 import { headerStyle } from './EstablishmentsTable';
 import { cellStyle } from './EstablishmentsTableRow';
 import { useAppContext } from '../AppProvider';

@@ -1,10 +1,10 @@
 import {
   PaginatedEstablishmentsTable,
   tableStyle,
-} from './PaginatedEstablishmentsTable';
+} from '../components/PaginatedEstablishmentsTable';
 import Background from '../static/logo.svg';
-import { FavoritesTable } from './FavoritesTable';
-import Dropdown from './Dropdown';
+import { FavoritesTable } from '../components/FavoritesTable';
+import Dropdown from '../components/Dropdown';
 import { useEffect, useState } from 'react';
 import { getAuthorities } from '../api/ratingsAPI';
 

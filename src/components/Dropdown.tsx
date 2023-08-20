@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ResultAPIType } from '../types';
 import { useAppContext } from '../AppProvider';
-import { buttonStyle } from './EstablishmentPage';
+import { buttonStyle } from '../pages/EstablishmentPage';
 
 const containerStyle: React.CSSProperties = {
   position: 'relative',

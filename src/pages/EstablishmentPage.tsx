@@ -1,11 +1,11 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { getEstablishment } from '../api/ratingsAPI';
 import { useEffect, useState } from 'react';
-import { headerStyle } from './EstablishmentsTable';
-import { tableStyle } from './PaginatedEstablishmentsTable';
-import { cellStyle } from './EstablishmentsTableRow';
+import { headerStyle } from '../components/EstablishmentsTable';
+import { tableStyle } from '../components/PaginatedEstablishmentsTable';
+import { cellStyle } from '../components/EstablishmentsTableRow';
 import { logoStyle } from './HomePage';
-import { FavoritesTable } from './FavoritesTable';
+import { FavoritesTable } from '../components/FavoritesTable';
 import { ResultAPIType } from '../types';
 
 export const buttonStyle = {
