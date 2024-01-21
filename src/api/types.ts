@@ -23,7 +23,10 @@ export type EstablishmentsType = {
 };
 
 export type LocalAuthorityType = {
-    establishments: {}[];
+    authorities: {
+        Name: string;
+        LocalAuthorityId: number;
+    }[];
     meta: Meta;
     links: Links;
 }

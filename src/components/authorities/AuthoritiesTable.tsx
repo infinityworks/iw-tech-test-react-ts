@@ -1,22 +1,35 @@
 import React, {useState, useEffect} from "react";
 import {AuthoritiesButtons} from "./AuthoritiesButtons";
 import {Table} from "../../utils/global.styled";
-import {getLocalAuthority} from "../../api/ratingsAPI";
+import {getLocalAuthority, getRatingsInLocalAuthority} from "../../api/ratingsAPI";
+import {EstablishmentsType, LocalAuthorityType} from "../../api/types";
+import {ErrorDiv, TD} from "./Authorities.styled";
+import {PAGE} from "../../utils/constants";
 
-const PAGE = {
-    next: "next",
-    previous: "previous",
+type RatingFH = {
+    rate: number | string,
+    count: number,
 }
 
+type RatingPercentageFH = {
+    rate: number | string,
+    percentage: number,
+}
+
+const FHRS = "FHRS";
+const FHIS = "FHIS";
+
 export const AuthoritiesTable: React.FC = () => {
-    const [error, setError] = useState<{ message: string; [key: string]: string }>();
-    const [actualPage, setActualPage] = useState(1);
+    const [error, setError] = useState<any>();
+    const [actualPage, setActualPage] = useState<number>(1);
+    const [localAuthority, setLocalAuthority] = useState<LocalAuthorityType>();
+    const [tBodyContent, setTbodyContent] = useState<RatingPercentageFH[]>([]);
 
     useEffect(() => {
         return () => {
             getLocalAuthority(actualPage).then(
-                (result) => {
-                    console.log(result)
+                (result: LocalAuthorityType) => {
+                    setLocalAuthority(result);
                 },
                 (error) => {
                     setError(error)
@@ -25,64 +38,103 @@ export const AuthoritiesTable: React.FC = () => {
         };
     }, []);
 
-    async function getToAnotherPage(anotherPage: any) {
-        setActualPage(anotherPage === PAGE.next ? actualPage + 1 : actualPage - 1)
-        return () => {
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const ratingsFHRS = await Promise.all([
+                    {rate: "5", count: await getStatistic("5", FHRS)},
+                    {rate: "4", count: await getStatistic("4", FHRS)},
+                    {rate: "3", count: await getStatistic("3", FHRS)},
+                    {rate: "2", count: await getStatistic("2", FHRS)},
+                    {rate: "1", count: await getStatistic("1", FHRS)},
+                    {rate: "exempt", count: await getStatistic("0", FHRS)},
+                ]);
+
+                // todo zresetovať na nuly
+                //todo FHIS
+                const ratingsFHIS = await Promise.all([
+                    {rate: "Pass and eat safe", count: await getStatistic("pass", FHIS)},
+                    {rate: "Pass", count: await getStatistic("AwaitingInspection", FHIS)},
+                    {rate: "Improvement required", count: await getStatistic("ImprovementRequired", FHIS)},
+                ]);
+
+                const percentageRating: RatingPercentageFH[] = calculatePercentageRating(ratingsFHRS);
+                setTbodyContent(percentageRating);
+            } catch (error) {
+                setError(error);
+            }
+        };
+
+        fetchData();
+    }, [localAuthority]);
+
+    async function getToAnotherPage(anotherPage: string) {
+        let newPage = anotherPage === PAGE.next ? actualPage + 1 : actualPage - 1;
+        if (newPage > 0) {
+            setActualPage(newPage)
             getLocalAuthority(actualPage).then(
-                (result) => {
-                    console.log(result)
+                (result: LocalAuthorityType) => {
+                    setLocalAuthority(result);
                 },
                 (error) => {
                     setError(error)
                 }
             );
-        };
+        }
     }
 
-    function fillTbody() {
-        return (
-            <>
-                <tr>
-                    <td>5</td>
-                    <td>50%</td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td>0%</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>0%</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>0%</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>20%</td>
-                </tr>
-                <tr>
-                    <td>Exempt</td>
-                    <td>30%</td>
-                </tr>
-            </>
-        )
+    async function getStatistic(
+        ratingKey: string,
+        schemeTypeKey: string,
+    ): Promise<number> {
+        let totalCount = 0;
+        const localAuthorityId = localAuthority?.authorities[0].LocalAuthorityId ?? -1;
+        if (localAuthorityId > -1) {
+            await getRatingsInLocalAuthority(
+                //todo remove comment
+                localAuthorityId,
+                schemeTypeKey,
+                ratingKey
+            ).then(
+                (result: EstablishmentsType) => {
+                    totalCount = result.meta.totalCount;
+                },
+                (error) => {
+                    setError(error)
+                }
+            );
+        }
+        return totalCount;
+    }
+
+    function calculatePercentageRating(ratings: RatingFH[]): RatingPercentageFH[] {
+        const totalCount = ratings.reduce((sum, rating) => sum + rating.count, 0);
+        const percentageByRating: RatingPercentageFH[] = ratings.map((rating) => ({
+            rate: rating.rate,
+            percentage: rating.count === 0 ? 0 : Math.round((rating.count / totalCount) * 100),
+        }));
+        return percentageByRating;
     }
 
     return (
         <>
-            {error ? <div>Error: (error.message)</div> :
+            {error ? <ErrorDiv>Error: {error.message}</ErrorDiv> :
                 <Table>
                     <h2>Local authority</h2>
-                    <p>Authority name</p>
+                    <p>{localAuthority?.authorities[0].Name} ({localAuthority?.authorities[0].LocalAuthorityId})</p>
                     <table>
                         <thead>
-                        <th>Rating</th>
-                        <th>Percentage</th>
+                            <th key={0}>Rating</th>
+                            <th key={1}>Percentage</th>
                         </thead>
                         <tbody>
-                        {fillTbody()}
+                        {tBodyContent.map((rating: RatingPercentageFH, index: number) => (
+                            <tr key={index}>
+                                <TD key={index}>{rating.rate}</TD>
+                                <TD key={index + 1}>{rating.percentage}%</TD>
+                            </tr>
+                        ))}
+
                         {/*<tr>*/}
                         {/*    <td>Pass and eat safe</td>*/}
                         {/*    <td>50%</td>*/}
@@ -97,7 +149,9 @@ export const AuthoritiesTable: React.FC = () => {
                         {/*</tr>*/}
                         </tbody>
                     </table>
-                    <AuthoritiesButtons/>
+                    <AuthoritiesButtons
+                        getToAnotherPage={getToAnotherPage}
+                    />
                 </Table>
             }
         </>
