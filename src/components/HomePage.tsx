@@ -1,5 +1,6 @@
 import { PaginatedEstablishmentsTable } from "./PaginatedEstablishmentsTable";
 import Background from "../static/logo.svg";
+import { AuthoritiesTable } from "./authorities/AuthoritiesTable";
 
 const logoStyle: { [key: string]: string | number } = {
   width: "640px",
@@ -13,6 +14,7 @@ const HomePage = () => {
     <div>
       <header style={logoStyle} />
       <PaginatedEstablishmentsTable />
+      <AuthoritiesTable />
     </div>
   );
 };
