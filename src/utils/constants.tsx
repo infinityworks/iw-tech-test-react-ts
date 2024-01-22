@@ -6,3 +6,6 @@ export const PAGE = {
     next: "NEXT",
     previous: "PREVIOUS",
 }
+
+export const FHRS = "FHRS";
+export const FHIS = "FHIS";

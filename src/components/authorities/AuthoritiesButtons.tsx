@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React from "react";
 import {PAGE} from "../../utils/constants";
 import {Button, ButtonArea} from "./Authorities.styled";
 

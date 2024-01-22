@@ -9,7 +9,7 @@ export const ErrorDiv = styled.div`
 `;
 
 export const TD = styled.td`
-    text-align: center;
+  text-align: center;
 `;
 
 export const ButtonArea = styled.div`
@@ -21,8 +21,19 @@ export const Button = styled.div`
   color: white;
   font-weight: bold;
   width: fit-content;
-  
+
   &:hover {
     cursor: pointer;
   }
+`
+
+export const LoadingInfo = styled.p`
+  color: white;
+  background: black;
+  margin-left: 50px;
+  padding: 10px 15px;
+  font-size: 20px;
+  font-weight: bold;
+  text-transform: uppercase;
+  width: fit-content;
 `
