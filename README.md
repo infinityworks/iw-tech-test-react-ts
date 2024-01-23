@@ -6,11 +6,15 @@ This is the Infinity Works React TypeScript Tech Test.
 
 ## Requirements
 
-- Yarn
+- Yarn or npm
 - Access to the Internet
 - Suitable development environment
 
-## Getting Started
+## Getting Started with npm
+- Install: `npm install`
+- Run: `npm run start`
+
+## Getting Started with yarn
 
 - Run it: `yarn start`
 - Test it: `yarn test`

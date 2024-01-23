@@ -2,14 +2,7 @@ import { useState, useEffect } from "react";
 import { EstablishmentsTable } from "./EstablishmentsTable";
 import { EstablishmentsTableNavigation } from "./EstablishmentsTableNavigation";
 import { getEstablishmentRatings } from "../api/ratingsAPI";
-
-const tableStyle = {
-  background: "rgba(51, 51, 51, 0.9)",
-  padding: "10px",
-  width: "max-content",
-  marginLeft: "50px",
-  color: "white",
-};
+import {Table} from "../utils/global.styled";
 
 export const PaginatedEstablishmentsTable = () => {
   const [error, setError] =
@@ -60,7 +53,7 @@ export const PaginatedEstablishmentsTable = () => {
     return <div>Error: {error.message}</div>;
   } else {
     return (
-      <div style={tableStyle}>
+      <Table>
         <h2>Food Hygiene Ratings</h2>
         <EstablishmentsTable establishments={establishments} />
         <EstablishmentsTableNavigation
@@ -69,7 +62,7 @@ export const PaginatedEstablishmentsTable = () => {
           onPreviousPage={handlePreviousPage}
           onNextPage={handleNextPage}
         />
-      </div>
+      </Table>
     );
   }
 };
