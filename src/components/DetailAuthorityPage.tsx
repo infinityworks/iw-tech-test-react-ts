@@ -1,9 +1,9 @@
+import { useGetAuthorityByIdApi } from 'api/localAuthority/authoritiesByIdAPI';
 import { useGetSchemeTypesById } from 'api/schemeType/schemeTypeByIdAPI';
 import { GetFoodRatingsForAuthority } from 'components/GetFoodRatingsForAuthority';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { PageBody } from 'ui/pageBody';
 import { PageHeader } from 'ui/PageHeader';
-import { useGetAuthorityByIdApi } from '../api/localAuthority/authoritiesByIdAPI';
 
 export const DetailAuthorityPage = () => {
 	const navigate = useNavigate();

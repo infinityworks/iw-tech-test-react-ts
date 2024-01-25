@@ -1,6 +1,6 @@
+import { EstablishmentType } from 'api/establishments/establishmentsAPI';
+import { useGetEstablishmentsByLocalAuthority } from 'api/establishments/establishmentsByLocalAuthority';
 import { useEffect, useState } from 'react';
-import { EstablishmentType } from '../api/establishments/establishmentsAPI';
-import { useGetEstablishmentsByLocalAuthority } from '../api/establishments/establishmentsByLocalAuthority';
 
 export const useGetEstablishmentsByAuthority = (localAuthorityId: number) => {
 	const [data, setData] = useState<EstablishmentType[]>([]);

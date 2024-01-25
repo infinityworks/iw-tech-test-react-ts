@@ -1,4 +1,4 @@
-import { AdditionalProps, createAPIMethod } from '../../utils';
+import { AdditionalProps, createAPIMethod } from 'utils';
 
 export interface EstablishmentType extends AdditionalProps {
 	FHRSID: number;

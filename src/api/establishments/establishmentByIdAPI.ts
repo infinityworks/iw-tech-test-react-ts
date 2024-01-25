@@ -1,4 +1,4 @@
-import { createAPIMethod } from '../../utils';
+import { createAPIMethod } from 'utils';
 import { EstablishmentType } from './establishmentsAPI';
 
 export const getEstablishmentById = (

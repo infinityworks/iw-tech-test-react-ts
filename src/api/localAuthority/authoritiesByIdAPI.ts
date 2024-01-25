@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { createAPIMethod } from '../../utils/createAPIMethod';
+import { createAPIMethod } from 'utils';
 import { AuthorityAPIType } from './authoritiesAPI';
 
 export const useGetAuthorityByIdApi = (authorityId: string) => {

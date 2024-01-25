@@ -1,12 +1,12 @@
+import {
+	AuthorityAPIType,
+	useGetAuthoritiesApi,
+} from 'api/localAuthority/authoritiesAPI';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { PageBody } from 'ui/pageBody';
 import { PageNavigation } from 'ui/PageNavigation';
 import { useSearchURLParams } from 'utils/useSearchURLParams';
-import {
-	AuthorityAPIType,
-	useGetAuthoritiesApi,
-} from '../api/localAuthority/authoritiesAPI';
 
 interface AuthorityRowDataProps {
 	authority: AuthorityAPIType;

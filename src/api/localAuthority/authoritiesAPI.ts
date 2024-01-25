@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
-import { AdditionalProps } from '../../utils/additionalProps';
-import { createAPIMethod } from '../../utils/createAPIMethod';
+import { AdditionalProps, createAPIMethod } from 'utils';
 
 export interface AuthorityAPIType extends AdditionalProps {
 	LocalAuthorityId: number;

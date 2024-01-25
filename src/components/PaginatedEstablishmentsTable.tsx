@@ -1,7 +1,7 @@
+import { getEstablishments } from 'api/establishments/establishmentsAPI';
 import { useEffect, useState } from 'react';
+import { PageBody } from 'ui/pageBody';
 import { PageNavigation } from 'ui/PageNavigation';
-import { getEstablishments } from '../api/establishments/establishmentsAPI';
-import { PageBody } from '../ui/pageBody';
 import { EstablishmentsTable } from './EstablishmentsTable';
 import { EstablishmentsTableNavigation } from './EstablishmentsTableNavigation';
 
