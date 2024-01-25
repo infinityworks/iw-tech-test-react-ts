@@ -19,7 +19,7 @@ export const EstablishmentsTable: React.FC<{
           <th style={headerStyle}>Rating Value</th>
         </tr>
         {establishments &&
-          establishments?.map(
+          establishments.map(
             (
               establishment: { [key: string]: string } | null | undefined,
               index: React.Key | null | undefined
