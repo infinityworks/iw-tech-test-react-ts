@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { EstablishmentsTable } from "./EstablishmentsTable";
 import { EstablishmentsTableNavigation } from "./EstablishmentsTableNavigation";
 import { Establishment } from "../types";
-import { getEstablishmentRatings } from "../../api/ratingsAPI";
+import { getEstablishmentRatings } from "../api/ratingsAPI";
 
 const tableStyle = {
   background: "rgba(51, 51, 51, 0.9)",

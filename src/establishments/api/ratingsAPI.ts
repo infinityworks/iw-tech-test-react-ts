@@ -1,4 +1,4 @@
-import { Establishment } from "../establishments/types";
+import { Establishment } from "../types";
 
 export type EstablishmentsType = {
   establishments: Establishment[];
