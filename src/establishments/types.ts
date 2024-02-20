@@ -5,3 +5,7 @@ export type Establishment = {
 }
 
 export type NullableEstablishments = Establishment[] | null | undefined;
+
+export type Country = "England" | "Scotland";
+
+export type SchemeTypeKey = "FHRS" | "FHIS";
