@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { EstablishmentsTable } from "./EstablishmentsTable";
 import { EstablishmentsTableNavigation } from "./EstablishmentsTableNavigation";
 import { Establishment } from "../types";
-import { useFetchEstablishmentsRatings } from "../hooks/useFtechEstablishmentsRatings";
+import { getEstablishmentRatings } from "../../api/ratingsAPI";
 
 const tableStyle = {
   background: "rgba(51, 51, 51, 0.9)",
@@ -22,35 +22,52 @@ export const PaginatedEstablishmentsTable = () => {
   const [establishments, setEstablishments] = useState<Establishment[]>([]);
   const [pageNum, setPageNum] = useState(1);
   const [pageCount] = useState(100);
-  const fetchRatings = useFetchEstablishmentsRatings();
+  const [isLoading, setIsLoading] = useState(true);
+
+  const fetchRatings = async () => {
+    try {
+      const ratings = await getEstablishmentRatings(pageNum);
+      setEstablishments(ratings.establishments);
+    } catch (err: any) {
+      setError(err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
-    fetchRatings(pageNum, setEstablishments, setError);
+    fetchRatings();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pageNum]);
 
   const handlePreviousPage = () => {
-    pageNum > 1 && setPageNum((prevPageNum: number) => prevPageNum - 1);
+    if (pageNum > 1) {
+      setPageNum((prevPageNum: number) => prevPageNum - 1);
+      setIsLoading(true);
+    } 
   }
 
   const handleNextPage = () => {
-    pageNum < pageCount && setPageNum((prevPageNum: number) => prevPageNum + 1);
+    if (pageNum < pageCount) {
+      setPageNum((prevPageNum: number) => prevPageNum + 1);
+      setIsLoading(true);
+    }
   }
 
   if (error) {
     return <div>Error: {error.message}</div>;
-  } else {
-    return (
-      <div style={tableStyle}>
-        <h2>Food Hygiene Ratings</h2>
-        <EstablishmentsTable establishments={establishments} />
-        <EstablishmentsTableNavigation
-          pageNum={pageNum}
-          pageCount={pageCount}
-          onPreviousPage={handlePreviousPage}
-          onNextPage={handleNextPage}
-        />
-      </div>
-    );
   }
+
+  return (
+    <div style={tableStyle}>
+      <h2>Food Hygiene Ratings</h2>
+      <EstablishmentsTable establishments={establishments} isLoading={isLoading}/>
+      <EstablishmentsTableNavigation
+        pageNum={pageNum}
+        pageCount={pageCount}
+        onPreviousPage={handlePreviousPage}
+        onNextPage={handleNextPage}
+      />
+    </div>
+  );
 };

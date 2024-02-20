@@ -12,12 +12,16 @@ const useStyles = createUseStyles({
 
 interface Props {
   establishments: NullableEstablishments;
+  isLoading: boolean
 }
 
-export const EstablishmentsTable= ({ establishments }: Props) => {
+export const EstablishmentsTable= (props: Props) => {
+  const { establishments, isLoading } = props;
   const classes = useStyles();
 
-  console.log('### Esta: ', establishments);
+  if (isLoading) {
+    return <div>Loading data...</div>;
+  }
 
   return (
     <table>
