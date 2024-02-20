@@ -1,8 +1,11 @@
 import { useState, useEffect } from "react";
 import { EstablishmentsTable } from "./EstablishmentsTable";
 import { EstablishmentsTableNavigation } from "./EstablishmentsTableNavigation";
-import { Establishment } from "../types";
-import { getEstablishmentRatings } from "../api/ratingsAPI";
+import { Country, Establishment } from "../types";
+import { getEstablishmentRatingsComplex } from "../api/ratingsAPI";
+import { CountryPicker } from "./CountryPicker";
+import { countries } from "../model/countries";
+import { RatingMappingServiceFactory } from "../services/RatingMappingServiceFactory";
 
 const tableStyle = {
   background: "rgba(51, 51, 51, 0.9)",
@@ -20,14 +23,20 @@ type EstablishmentsRetrievalError = {
 export const PaginatedEstablishmentsTable = () => {
   const [error, setError] = useState<EstablishmentsRetrievalError>();
   const [establishments, setEstablishments] = useState<Establishment[]>([]);
+  const [selectedCountry, setSelectedCountry] = useState<Country>(countries[0]);
   const [pageNum, setPageNum] = useState(1);
-  const [pageCount] = useState(100);
+  const [pageCount, setPageCount] = useState(100);
   const [isLoading, setIsLoading] = useState(true);
 
   const fetchRatings = async () => {
     try {
-      const ratings = await getEstablishmentRatings(pageNum);
-      setEstablishments(ratings.establishments);
+      const ratings = await getEstablishmentRatingsComplex(pageNum, selectedCountry);
+      const ratingMapper = RatingMappingServiceFactory.createFor(selectedCountry);
+      setEstablishments(ratings.establishments.map(establishment => ({
+        BusinessName: establishment.BusinessName,
+        RatingValue: `${ratingMapper.convert(establishment.RatingValue)} (originally ${establishment.RatingValue})`
+      })));
+      setPageCount(Math.min(100, ratings.meta.totalPages));
     } catch (err: any) {
       setError(err);
     } finally {
@@ -38,7 +47,7 @@ export const PaginatedEstablishmentsTable = () => {
   useEffect(() => {
     fetchRatings();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pageNum]);
+  }, [pageNum, selectedCountry]);
 
   const handlePreviousPage = () => {
     if (pageNum > 1) {
@@ -54,6 +63,12 @@ export const PaginatedEstablishmentsTable = () => {
     }
   }
 
+  const handleCountrySelect = (newCountry: Country) => {
+    if (selectedCountry !== newCountry) {
+      setSelectedCountry(newCountry);
+    }
+  };
+
   if (error) {
     return <div>Error: {error.message}</div>;
   }
@@ -61,6 +76,7 @@ export const PaginatedEstablishmentsTable = () => {
   return (
     <div style={tableStyle}>
       <h2>Food Hygiene Ratings</h2>
+      <CountryPicker onSelectCountry={handleCountrySelect}/>
       <EstablishmentsTable establishments={establishments} isLoading={isLoading}/>
       <EstablishmentsTableNavigation
         pageNum={pageNum}
