@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { EstablishmentsTable } from "./EstablishmentsTable";
 import { EstablishmentsTableNavigation } from "./EstablishmentsTableNavigation";
-import { getEstablishmentRatings } from "../api/ratingsAPI";
+import { Establishment } from "../types";
+import { useFetchEstablishmentsRatings } from "../hooks/useFtechEstablishmentsRatings";
 
 const tableStyle = {
   background: "rgba(51, 51, 51, 0.9)",
@@ -11,49 +12,29 @@ const tableStyle = {
   color: "white",
 };
 
+type EstablishmentsRetrievalError = {
+  message: string;
+  [key: string]: string
+}
+
 export const PaginatedEstablishmentsTable = () => {
-  const [error, setError] =
-    useState<{ message: string; [key: string]: string }>();
-  const [establishments, setEstablishments] = useState<
-    { [key: string]: string }[]
-  >([]);
+  const [error, setError] = useState<EstablishmentsRetrievalError>();
+  const [establishments, setEstablishments] = useState<Establishment[]>([]);
   const [pageNum, setPageNum] = useState(1);
   const [pageCount] = useState(100);
+  const fetchRatings = useFetchEstablishmentsRatings();
 
   useEffect(() => {
-    getEstablishmentRatings(pageNum).then(
-      (result) => {
-        setEstablishments(result?.establishments);
-      },
-      (error) => {
-        setError(error);
-      }
-    );
+    fetchRatings(pageNum, setEstablishments, setError);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [pageNum]);
 
-  async function handlePreviousPage() {
-    pageNum > 1 && setPageNum(pageNum - 1);
-    getEstablishmentRatings(pageNum).then(
-      (result) => {
-        setEstablishments(result.establishments);
-      },
-      (error) => {
-        setError(error);
-      }
-    );
+  const handlePreviousPage = () => {
+    pageNum > 1 && setPageNum((prevPageNum: number) => prevPageNum - 1);
   }
 
-  async function handleNextPage() {
-    pageNum < pageCount && setPageNum(pageNum + 1);
-    getEstablishmentRatings(pageNum).then(
-      (result) => {
-        setEstablishments(result.establishments);
-      },
-      (error) => {
-        setError(error);
-      }
-    );
+  const handleNextPage = () => {
+    pageNum < pageCount && setPageNum((prevPageNum: number) => prevPageNum + 1);
   }
 
   if (error) {

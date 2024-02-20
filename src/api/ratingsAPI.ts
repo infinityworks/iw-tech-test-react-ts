@@ -1,5 +1,7 @@
+import { Establishment } from "../establishments/types";
+
 export type EstablishmentsType = {
-  establishments: {}[];
+  establishments: Establishment[];
   meta: {
     dataSource: string;
     extractDate: string;
@@ -18,11 +20,12 @@ export type EstablishmentsType = {
   ];
 };
 
-export function getEstablishmentRatings(
+export async function getEstablishmentRatings(
   pageNum: number
 ): Promise<EstablishmentsType> {
-  return fetch(
+  const response = await fetch(
     `http://api.ratings.food.gov.uk/Establishments/basic/${pageNum}/10`,
     { headers: { "x-api-version": "2" } }
-  ).then((res) => res.json());
+  );
+  return response.json();
 }
