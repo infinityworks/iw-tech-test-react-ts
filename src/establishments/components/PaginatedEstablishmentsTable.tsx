@@ -6,14 +6,17 @@ import { getEstablishmentRatingsComplex } from "../api/ratingsAPI";
 import { CountryPicker } from "./CountryPicker";
 import { countries } from "../model/countries";
 import { RatingMappingServiceFactory } from "../services/RatingMappingServiceFactory";
+import { createUseStyles } from "react-jss";
 
-const tableStyle = {
-  background: "rgba(51, 51, 51, 0.9)",
-  padding: "10px",
-  width: "max-content",
-  marginLeft: "50px",
-  color: "white",
-};
+const useStyles = createUseStyles({
+  table: {
+    background: "rgba(51, 51, 51, 0.9)",
+    padding: "10px",
+    width: "max-content",
+    marginLeft: "50px",
+    color: "white",
+  }
+});
 
 type EstablishmentsRetrievalError = {
   message: string;
@@ -27,6 +30,8 @@ export const PaginatedEstablishmentsTable = () => {
   const [pageNum, setPageNum] = useState(1);
   const [pageCount, setPageCount] = useState(100);
   const [isLoading, setIsLoading] = useState(true);
+
+  const classes = useStyles();
 
   const fetchRatings = async () => {
     try {
@@ -74,7 +79,7 @@ export const PaginatedEstablishmentsTable = () => {
   }
 
   return (
-    <div style={tableStyle}>
+    <div className={classes.table}>
       <h2>Food Hygiene Ratings</h2>
       <CountryPicker onSelectCountry={handleCountrySelect}/>
       <EstablishmentsTable establishments={establishments} isLoading={isLoading}/>
