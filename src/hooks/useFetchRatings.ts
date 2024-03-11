@@ -1,5 +1,7 @@
-export type EstablishmentsType = {
-  establishments: {}[];
+import { useFetch } from "./useFetch";
+
+type ResponseType = {
+  establishments: EstablishmentDto[];
   meta: {
     dataSource: string;
     extractDate: string;
@@ -18,11 +20,9 @@ export type EstablishmentsType = {
   ];
 };
 
-export function getEstablishmentRatings(
-  pageNum: number
-): Promise<EstablishmentsType> {
-  return fetch(
+export const useFetchRatings = (pageNum: number) => {
+  return useFetch<ResponseType>(
     `http://api.ratings.food.gov.uk/Establishments/basic/${pageNum}/10`,
     { headers: { "x-api-version": "2" } }
-  ).then((res) => res.json());
-}
+  );
+};

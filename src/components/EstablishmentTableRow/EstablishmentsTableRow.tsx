@@ -1,8 +1,7 @@
-import "./index.css";
-
 type EstablishmentsTableRowProps = {
-  establishment: { [key: string]: string } | null | undefined;
+  establishment: EstablishmentDto;
 };
+
 export const EstablishmentsTableRow = ({
   establishment,
 }: EstablishmentsTableRowProps) => {
