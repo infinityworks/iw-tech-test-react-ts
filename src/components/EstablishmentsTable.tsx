@@ -1,5 +1,5 @@
 import React from "react";
-import { EstablishmentsTableRow } from "./EstablishmentsTableRow";
+import { EstablishmentsTableRow } from "./EstablishmentTableRow";
 import PropTypes from "prop-types";
 
 const headerStyle: { [key: string]: string | number } = {
