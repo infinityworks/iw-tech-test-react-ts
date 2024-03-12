@@ -1,5 +1,5 @@
 type EstablishmentsTableRowProps = {
-  establishment: EstablishmentDto;
+  establishment: Pick<EstablishmentDto, "BusinessName" | "RatingValue">;
 };
 
 export const EstablishmentsTableRow = ({

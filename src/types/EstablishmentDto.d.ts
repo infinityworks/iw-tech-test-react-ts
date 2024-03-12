@@ -5,10 +5,5 @@ interface EstablishmentDto {
   BusinessType: string;
   RatingValue: string;
   RatingDate: Date;
-  links: Link[];
-}
-
-interface Link {
-  rel: string;
-  href: string;
+  links: LinkDto[];
 }

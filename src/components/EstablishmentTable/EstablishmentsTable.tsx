@@ -1,8 +1,11 @@
+import { ComponentProps } from "react";
 import { EstablishmentsTableRow } from "../EstablishmentTableRow";
 import "./index.css";
 
 type EstablishmentsTableProps = {
-  establishments: EstablishmentDto[];
+  establishments: ComponentProps<
+    typeof EstablishmentsTableRow
+  >["establishment"][];
   isLoading: boolean;
 };
 

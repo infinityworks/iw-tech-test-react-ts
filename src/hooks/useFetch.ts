@@ -4,20 +4,26 @@ export const useFetch = <Data>(
   url: string,
   options?: RequestInit | undefined
 ) => {
+  console.log(url, "url");
   const [data, setData] = useState<Data | undefined>();
-  const [error, setError] = useState<unknown>(null);
+  const [error, setError] = useState<Error | undefined>();
   const [loading, setLoading] = useState(false);
-  const [input] = useState(url);
-  const [init] = useState(options);
+  const [input, setInput] = useState(url);
+  const [init, setInit] = useState(options);
   const [refetchIndex, setRefetchIndex] = useState(0);
 
-  const refetch = () =>
+  const refetch = () => {
+    setInput(url);
+    setInit(options);
     setRefetchIndex((prevRefetchIndex) => prevRefetchIndex + 1);
+  };
+
   useEffect(() => {
     (async function () {
       try {
-        setLoading(true);
+        setError(undefined);
         setData(undefined);
+        setLoading(true);
         const response = await fetch(input, init);
         if (!response.ok) {
           throw new Error(response.statusText);
@@ -25,7 +31,7 @@ export const useFetch = <Data>(
         const data = (await response.json()) as Data;
         setData(data);
       } catch (err) {
-        setError(err);
+        setError(err as Error);
       } finally {
         setLoading(false);
       }

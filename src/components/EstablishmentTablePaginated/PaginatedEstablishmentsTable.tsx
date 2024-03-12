@@ -1,43 +1,27 @@
-import { useState, useEffect } from "react";
-import { EstablishmentsTable } from "../EstablishmentTable";
-import { EstablishmentsTablePagination } from "../EstablishmentTablePagination";
-import { useFetchRatings } from "../../hooks/useFetchRatings";
-
+import { useState } from "react";
+import { SelectAuthorities } from "../SelectAuthorities";
+import { TableWithFilters } from "./TableWithFilters";
+import { TableBasic } from "./TableBasic";
 import "./index.css";
 
 export const PaginatedEstablishmentsTable = () => {
-  const [pageNum, setPageNum] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-  const { error, data, loading, refetch } = useFetchRatings(pageNum);
-
-  useEffect(() => {
-    setTotalPages(data?.meta?.totalCount ?? 1);
-  }, [data]);
-
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
+  const [localAuthorityId, setLocalAuthorityId] = useState<
+    string | undefined
+  >();
 
   return (
     <div className="establishment-container">
       <h2>Food Hygiene Ratings</h2>
-      <EstablishmentsTable
-        establishments={data?.establishments ?? []}
-        isLoading={loading}
-      />
-      <EstablishmentsTablePagination
-        pageNum={pageNum}
-        pageCount={totalPages}
-        onPreviousPage={() => {
-          setPageNum(pageNum - 1);
-          refetch();
+      <SelectAuthorities
+        onChange={(val) => {
+          setLocalAuthorityId(val);
         }}
-        onNextPage={() => {
-          setPageNum(pageNum + 1);
-          refetch();
-        }}
-        isDisabled={loading}
       />
+      {localAuthorityId ? (
+        <TableWithFilters localAuthorityId={localAuthorityId} />
+      ) : (
+        <TableBasic />
+      )}
     </div>
   );
 };
