@@ -1,19 +1,11 @@
-import { PaginatedEstablishmentsTable } from "../components/EstablishmentTablePaginated/PaginatedEstablishmentsTable";
-import Background from "../static/logo.svg";
-
-const logoStyle: { [key: string]: string | number } = {
-  width: "640px",
-  height: "25px",
-  background: `transparent url(${Background}) no-repeat center`,
-  margin: "20px auto",
-};
+import { PaginatedEstablishmentsTable } from "../components/EstablishmentTablePaginated";
+import { PageTemplate } from "../components/PageTemplate";
 
 const HomePage = () => {
   return (
-    <div>
-      <header style={logoStyle} />
+    <PageTemplate>
       <PaginatedEstablishmentsTable />
-    </div>
+    </PageTemplate>
   );
 };
 

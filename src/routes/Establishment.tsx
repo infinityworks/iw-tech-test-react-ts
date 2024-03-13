@@ -1,15 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom";
-import Background from "../static/logo.svg";
-import { Container } from "../components/Container";
 import { useFetchEstablishment } from "../hooks/useFetchEstablishment";
 import { useEffect } from "react";
-
-const logoStyle: { [key: string]: string | number } = {
-  width: "640px",
-  height: "25px",
-  background: `transparent url(${Background}) no-repeat center`,
-  margin: "20px auto",
-};
+import { PageTemplate } from "../components/PageTemplate";
 
 const formatDate = (isoString: string) =>
   new Intl.DateTimeFormat("in", { dateStyle: "short" }).format(
@@ -32,36 +24,33 @@ const Establishment = () => {
   }
 
   return (
-    <div>
-      <header style={logoStyle} />
+    <PageTemplate>
       <button type="button" onClick={() => navigate(-1)}>
         Go Back
       </button>
-      <Container>
-        {error && <>Error: {error?.message} </>}
-        {loading && <>Loading ...</>}
-        {data && (
-          <>
-            <h1>{data?.BusinessName}</h1>
-            <address>
-              {data?.AddressLine1}
-              <br />
-              {data?.AddressLine2}
-              <br />
-              {data?.AddressLine3}
-              {data?.AddressLine4}
-              <br />
-            </address>
+      {error && <>Error: {error?.message} </>}
+      {loading && <>Loading ...</>}
+      {data && (
+        <>
+          <h1>{data?.BusinessName}</h1>
+          <address>
+            {data?.AddressLine1}
             <br />
-            <div>Rating: {data?.RatingValue}</div>
-            <div>
-              Rating Date: {data?.RatingDate && formatDate(data.RatingDate)}
-            </div>
-          </>
-        )}
-        {!loading && !error && !data && <>There is no data.</>}
-      </Container>
-    </div>
+            {data?.AddressLine2}
+            <br />
+            {data?.AddressLine3}
+            {data?.AddressLine4}
+            <br />
+          </address>
+          <br />
+          <div>Rating: {data?.RatingValue}</div>
+          <div>
+            Rating Date: {data?.RatingDate && formatDate(data.RatingDate)}
+          </div>
+        </>
+      )}
+      {!loading && !error && !data && <>There is no data.</>}
+    </PageTemplate>
   );
 };
 

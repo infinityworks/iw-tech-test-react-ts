@@ -19,10 +19,11 @@ export const EstablishmentsTable = ({
         <tr>
           <th>Business Name</th>
           <th>Rating Value</th>
+          <th></th>
         </tr>
         {isLoading && (
           <tr>
-            <th colSpan={2}>Loading ...</th>
+            <th colSpan={3}>Loading ...</th>
           </tr>
         )}
       </thead>

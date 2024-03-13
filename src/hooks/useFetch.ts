@@ -4,7 +4,6 @@ export const useFetch = <Data>(
   url: string,
   options?: RequestInit | undefined
 ) => {
-  console.log(url, "url");
   const [data, setData] = useState<Data | undefined>();
   const [error, setError] = useState<Error | undefined>();
   const [loading, setLoading] = useState(false);

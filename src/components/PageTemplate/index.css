@@ -1,0 +1,13 @@
+.header {
+  padding: 20px 0;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+main div:last-child {
+  margin-top: auto;
+}

@@ -5,6 +5,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import reportWebVitals from "./reportWebVitals";
 import HomePage from "./routes/HomePage";
 import Establishment from "./routes/Establishment";
+import { EstablishmentFavouriteProvider } from "./components/EstablishmentFavoriteTable";
 
 const router = createBrowserRouter([
   {
@@ -19,7 +20,9 @@ const router = createBrowserRouter([
 
 ReactDOM.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <EstablishmentFavouriteProvider>
+      <RouterProvider router={router} />
+    </EstablishmentFavouriteProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

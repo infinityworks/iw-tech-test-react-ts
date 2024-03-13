@@ -29,7 +29,6 @@ export const useFetchRatingsByAuthority = (params: Params) => {
     }
   }
   const urlParams = searchParams.toString();
-  console.log(urlParams);
   return useFetch<RatingsResponse>(
     `http://api.ratings.food.gov.uk/Establishments?${urlParams}`,
     { headers: { "x-api-version": "2" } }

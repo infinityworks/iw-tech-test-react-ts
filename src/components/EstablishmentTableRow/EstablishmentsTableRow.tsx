@@ -1,5 +1,6 @@
-import { useNavigate } from "react-router-dom";
-import "./index.css";
+import { useContext } from "react";
+import { EstablishmentFavouriteContext } from "../EstablishmentFavoriteTable";
+import { EstablishmentLink } from "../EstablishmentLink/EstablishmentLink";
 
 type EstablishmentsTableRowProps = {
   establishment: Pick<
@@ -11,23 +12,30 @@ type EstablishmentsTableRowProps = {
 export const EstablishmentsTableRow = ({
   establishment,
 }: EstablishmentsTableRowProps) => {
-  const navigate = useNavigate();
-  const linkToEstablishment = `/establishment/${establishment.FHRSID}`;
+  const { getIsInFavourite, addFavouriteItem, removeFavouriteItem } =
+    useContext(EstablishmentFavouriteContext);
+  const isChecked = getIsInFavourite(establishment.FHRSID);
   return (
     <tr>
       <td>
-        <a
-          href={linkToEstablishment}
-          onClick={(event) => {
-            event.preventDefault();
-            navigate(linkToEstablishment);
-          }}
-          className="establishment__link"
-        >
+        <EstablishmentLink id={establishment.FHRSID}>
           {establishment.BusinessName}
-        </a>
+        </EstablishmentLink>
       </td>
       <td>{establishment.RatingValue}</td>
+      <td>
+        <input
+          type="checkbox"
+          checked={isChecked}
+          onChange={(event) => {
+            if (event.target.checked) {
+              addFavouriteItem(establishment);
+            } else {
+              removeFavouriteItem(establishment.FHRSID);
+            }
+          }}
+        />
+      </td>
     </tr>
   );
 };
