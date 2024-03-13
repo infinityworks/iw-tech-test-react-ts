@@ -2,7 +2,7 @@ import { useState } from "react";
 import { SelectAuthorities } from "../SelectAuthorities";
 import { TableWithFilters } from "./TableWithFilters";
 import { TableBasic } from "./TableBasic";
-import "./index.css";
+import { Container } from "../Container";
 
 export const PaginatedEstablishmentsTable = () => {
   const [localAuthorityId, setLocalAuthorityId] = useState<
@@ -10,7 +10,7 @@ export const PaginatedEstablishmentsTable = () => {
   >();
 
   return (
-    <div className="establishment-container">
+    <Container>
       <h2>Food Hygiene Ratings</h2>
       <SelectAuthorities
         onChange={(val) => {
@@ -22,6 +22,6 @@ export const PaginatedEstablishmentsTable = () => {
       ) : (
         <TableBasic />
       )}
-    </div>
+    </Container>
   );
 };

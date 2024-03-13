@@ -1,7 +1,7 @@
 import { useFetch } from "./useFetch";
 
 interface RatingsResponse extends ApiResponse {
-  establishments: EstablishmentsByAuthorityDto[];
+  establishments: EstablishmentDetailDto[];
 }
 
 interface Params {

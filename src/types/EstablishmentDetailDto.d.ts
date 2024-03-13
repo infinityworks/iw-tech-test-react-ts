@@ -1,4 +1,4 @@
-interface EstablishmentsByAuthorityDto {
+interface EstablishmentDetailDto {
   AddressLine1: string;
   AddressLine2: string;
   AddressLine3: string;
@@ -17,7 +17,7 @@ interface EstablishmentsByAuthorityDto {
   NewRatingPending: boolean;
   Phone: string;
   PostCode: string;
-  RatingDate: Date;
+  RatingDate: string;
   RatingKey: string;
   RatingValue: string;
   RightToReply: string;
