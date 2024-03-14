@@ -12,7 +12,8 @@ export const TableWithFilters = ({
 }: TableWithFiltersProps) => {
   const [pageNum, setPageNum] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [localAuthorityId] = useState(initLocalAuthorityId);
+  const [localAuthorityId, setLocalAuthorityId] =
+    useState(initLocalAuthorityId);
 
   const { data, error, loading, refetch } = useFetchRatingsByAuthority({
     pageNumber: pageNum,
@@ -28,6 +29,12 @@ export const TableWithFilters = ({
     refetch();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pageNum]);
+
+  useEffect(() => {
+    setLocalAuthorityId(initLocalAuthorityId);
+    setPageNum(1);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initLocalAuthorityId]);
 
   if (error) {
     return <div>Error: {error?.message} </div>;
