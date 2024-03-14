@@ -43,8 +43,8 @@ const Establishment = () => {
             <br />
           </address>
           <br />
-          <div>Rating: {data?.RatingValue}</div>
-          <div>
+          <div data-cy="rating">Rating: {data?.RatingValue}</div>
+          <div data-cy="rating-date">
             Rating Date: {data?.RatingDate && formatDate(data.RatingDate)}
           </div>
         </>
