@@ -1,3 +1,4 @@
+/// <reference types="cypress" />
 import { format } from "date-fns";
 
 describe("4 Establishments link to their detail page", () => {
@@ -49,6 +50,7 @@ describe("4 Establishments link to their detail page", () => {
         );
     });
   });
+
   it("When the user clicks on an Establishment's name get redirected to detail page with back button.", () => {
     cy.wait("@getEstablishments");
     cy.get(".establishment-table a")
