@@ -1,5 +1,4 @@
 /// <reference types="cypress" />
-import { format } from "date-fns";
 
 describe("3-Filter-Establishments-by-Authority", () => {
   beforeEach(() => {
@@ -35,6 +34,15 @@ describe("3-Filter-Establishments-by-Authority", () => {
           expect(xhr.request.url).to.include(
             `/Establishments?pageNumber=1&localAuthorityId=${selectedID}`
           );
+
+          const expetedDataInTable = xhr.response?.body.establishments.map(
+            ({ BusinessName, RatingValue }) => [BusinessName, RatingValue, ""]
+          );
+          cy.get("table tbody")
+            .table()
+            .then((dataInTable) => {
+              expect(dataInTable).to.deep.equal(expetedDataInTable);
+            });
         });
       });
   });
