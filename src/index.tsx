@@ -5,6 +5,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import reportWebVitals from "./reportWebVitals";
 import HomePage from "./routes/HomePage";
 import Establishment from "./routes/Establishment";
+import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { EstablishmentFavouriteProvider } from "./components/EstablishmentFavoriteTable";
 
 const router = createBrowserRouter([
@@ -18,11 +19,15 @@ const router = createBrowserRouter([
   },
 ]);
 
+const queryClient = new QueryClient();
+
 ReactDOM.render(
   <React.StrictMode>
-    <EstablishmentFavouriteProvider>
-      <RouterProvider router={router} />
-    </EstablishmentFavouriteProvider>
+    <QueryClientProvider client={queryClient}>
+      <EstablishmentFavouriteProvider>
+        <RouterProvider router={router} />
+      </EstablishmentFavouriteProvider>
+    </QueryClientProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

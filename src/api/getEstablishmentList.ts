@@ -1,10 +1,10 @@
-import { useFetch } from "./useFetch";
+import { fetchData } from "./fetchData";
 
 interface EstablishmentListResponse extends ApiResponse {
   establishments: EstablishmentDetailDto[];
 }
 
-export const useFetchEstablishmentList = (ids: number[]) => {
+export const getEstablishmentList = (ids: number[]) => {
   const searchParams = new URLSearchParams();
 
   ids.forEach((id) => {
@@ -12,7 +12,7 @@ export const useFetchEstablishmentList = (ids: number[]) => {
   });
 
   const urlParams = searchParams.toString();
-  return useFetch<EstablishmentListResponse>(
+  return fetchData<EstablishmentListResponse>(
     `http://api.ratings.food.gov.uk/Establishments/list?${urlParams}`,
     { headers: { "x-api-version": "2" } }
   );

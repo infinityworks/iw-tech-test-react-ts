@@ -1,11 +1,11 @@
 import { PropsWithChildren, createContext, useEffect, useState } from "react";
-import { useFetchEstablishmentList } from "../../hooks/useFetchEstablishmentList";
+import { getEstablishmentList } from "../../api/getEstablishmentList";
 import {
   getFavouriteItemsStorage,
   removeFavouriteItemStorage,
   setFavouriteItemStorage,
 } from "./favouriteStorage";
-
+import { useQuery } from "@tanstack/react-query";
 export type EstablishmentFavourite = Pick<
   EstablishmentDetailDto,
   "FHRSID" | "BusinessName" | "RatingValue"
@@ -30,10 +30,14 @@ export const removeFromFavourite = (id: EstablishmentFavourite["FHRSID"]) => {};
 export const EstablishmentFavouriteProvider = ({
   children,
 }: PropsWithChildren<{}>) => {
-  const { data, loading } = useFetchEstablishmentList(
-    getFavouriteItemsStorage()
-  );
+  const storedIds = getFavouriteItemsStorage();
   const [items, setItems] = useState<EstablishmentFavourite[]>([]);
+
+  const { data, isLoading: loading } = useQuery({
+    queryKey: ["getEstablishmentList"],
+    queryFn: () => getEstablishmentList(storedIds),
+    enabled: storedIds.length > 0 && items.length === 0,
+  });
 
   useEffect(() => {
     setItems(data?.establishments ?? []);

@@ -1,21 +1,16 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { EstablishmentsTable } from "../EstablishmentTable";
 import { EstablishmentsTablePagination } from "../EstablishmentTablePagination";
-import { useFetchRatings } from "../../hooks/useFetchRatings";
+import { getRatings } from "../../api/getRatings";
+import { useQuery } from "@tanstack/react-query";
 
 export const TableBasic = () => {
   const [pageNum, setPageNum] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-  const { data, error, loading, refetch } = useFetchRatings(pageNum);
 
-  useEffect(() => {
-    setTotalPages(data?.meta?.totalCount ?? 1);
-  }, [data]);
-
-  useEffect(() => {
-    refetch();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pageNum]);
+  const { data, error, isLoading, isFetching, refetch } = useQuery({
+    queryKey: ["getRatings", getRatings],
+    queryFn: () => getRatings(pageNum),
+  });
 
   if (error) {
     return <div>Error: {error?.message} </div>;
@@ -25,18 +20,20 @@ export const TableBasic = () => {
     <>
       <EstablishmentsTable
         establishments={data?.establishments ?? []}
-        isLoading={loading}
+        isLoading={isLoading || isFetching}
       />
       <EstablishmentsTablePagination
         pageNum={pageNum}
-        pageCount={totalPages}
+        pageCount={data?.meta?.totalCount ?? 1}
         onPreviousPage={() => {
           setPageNum(pageNum - 1);
+          refetch();
         }}
         onNextPage={() => {
           setPageNum(pageNum + 1);
+          refetch();
         }}
-        isDisabled={loading}
+        isDisabled={isLoading || isFetching}
       />
     </>
   );

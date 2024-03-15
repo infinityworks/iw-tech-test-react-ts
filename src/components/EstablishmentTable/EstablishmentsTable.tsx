@@ -28,9 +28,10 @@ export const EstablishmentsTable = ({
         )}
       </thead>
       <tbody>
-        {establishments.map((establishment, index) => (
-          <EstablishmentsTableRow key={index} establishment={establishment} />
-        ))}
+        {!isLoading &&
+          establishments.map((establishment, index) => (
+            <EstablishmentsTableRow key={index} establishment={establishment} />
+          ))}
       </tbody>
     </table>
   );

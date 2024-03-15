@@ -1,4 +1,4 @@
-import { useFetch } from "./useFetch";
+import { fetchData } from "./fetchData";
 
 interface RatingsResponse extends ApiResponse {
   establishments: EstablishmentDetailDto[];
@@ -21,7 +21,7 @@ interface Params {
   pageSize: number;
 }
 
-export const useFetchRatingsByAuthority = (params: Params) => {
+export const getRatingsByAuthority = (params: Params) => {
   const searchParams = new URLSearchParams();
   for (const [key, value] of Object.entries(params)) {
     if (value) {
@@ -29,7 +29,7 @@ export const useFetchRatingsByAuthority = (params: Params) => {
     }
   }
   const urlParams = searchParams.toString();
-  return useFetch<RatingsResponse>(
+  return fetchData<RatingsResponse>(
     `http://api.ratings.food.gov.uk/Establishments?${urlParams}`,
     { headers: { "x-api-version": "2" } }
   );

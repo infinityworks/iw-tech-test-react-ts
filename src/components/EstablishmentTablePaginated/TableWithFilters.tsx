@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import { useFetchRatingsByAuthority } from "../../hooks/useFetchRatingsByAuthority";
+import { getRatingsByAuthority } from "../../api/getRatingsByAuthority";
 import { EstablishmentsTable } from "../EstablishmentTable";
 import { EstablishmentsTablePagination } from "../EstablishmentTablePagination";
+import { useQuery } from "@tanstack/react-query";
 
 type TableWithFiltersProps = {
   localAuthorityId: string;
@@ -15,10 +16,25 @@ export const TableWithFilters = ({
   const [localAuthorityId, setLocalAuthorityId] =
     useState(initLocalAuthorityId);
 
-  const { data, error, loading, refetch } = useFetchRatingsByAuthority({
-    pageNumber: pageNum,
-    localAuthorityId: localAuthorityId ?? "",
-    pageSize: 10,
+  const {
+    data,
+    error,
+    isLoading: loading,
+  } = useQuery({
+    queryKey: [
+      "getRatings",
+      {
+        pageNumber: pageNum,
+        localAuthorityId: localAuthorityId ?? "",
+        pageSize: 10,
+      },
+    ],
+    queryFn: () =>
+      getRatingsByAuthority({
+        pageNumber: pageNum,
+        localAuthorityId: localAuthorityId ?? "",
+        pageSize: 10,
+      }),
   });
 
   useEffect(() => {
@@ -26,7 +42,7 @@ export const TableWithFilters = ({
   }, [data]);
 
   useEffect(() => {
-    refetch();
+    //refetch();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pageNum]);
 

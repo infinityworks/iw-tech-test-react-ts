@@ -1,12 +1,20 @@
 import { useEffect, useState } from "react";
-import { useFetchAuthorities } from "../../hooks/useFetchAuthorities";
+import { getAuthorities } from "../../api/getAuthorities";
+import { useQuery } from "@tanstack/react-query";
 
 type SelectAuthoritiesProps = {
   onChange: (value: string) => void;
 };
 
 export const SelectAuthorities = ({ onChange }: SelectAuthoritiesProps) => {
-  const { data, error, loading } = useFetchAuthorities();
+  const {
+    data,
+    error,
+    isLoading: loading,
+  } = useQuery({
+    queryKey: ["getAuthorities"],
+    queryFn: getAuthorities,
+  });
   const [value, setValue] = useState<string | undefined>(undefined);
 
   useEffect(() => {

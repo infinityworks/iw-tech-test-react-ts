@@ -1,7 +1,8 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { useFetchEstablishment } from "../hooks/useFetchEstablishment";
+import { getEstablishment } from "../api/getEstablishment";
 import { useEffect } from "react";
 import { PageTemplate } from "../components/PageTemplate";
+import { useQuery } from "@tanstack/react-query";
 
 const formatDate = (isoString: string) =>
   new Intl.DateTimeFormat("in", { dateStyle: "short" }).format(
@@ -11,7 +12,14 @@ const formatDate = (isoString: string) =>
 const Establishment = () => {
   const { establishmentId } = useParams();
   const navigate = useNavigate();
-  const { error, data, loading } = useFetchEstablishment(establishmentId ?? "");
+  const {
+    data,
+    error,
+    isLoading: loading,
+  } = useQuery({
+    queryKey: ["getEstablishment", establishmentId],
+    queryFn: () => getEstablishment(establishmentId ?? ""),
+  });
 
   useEffect(() => {
     if (!establishmentId) {
