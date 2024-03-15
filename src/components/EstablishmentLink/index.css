@@ -1,0 +1,12 @@
+.establishment__link {
+  color: #fff;
+  text-decoration: none;
+}
+
+.establishment__link:visited {
+  color: #fff;
+}
+
+.establishment__link:hover {
+  opacity: 70%;
+}
