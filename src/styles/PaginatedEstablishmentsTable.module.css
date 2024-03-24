@@ -1,0 +1,11 @@
+.filterAuthorities {
+  padding: 10px 0px 20px 0px;
+  display: flex;
+  flex-direction: column;
+}
+
+span {
+font-size: 20px;
+padding-bottom: 10px;
+padding-left: 5px;
+}
