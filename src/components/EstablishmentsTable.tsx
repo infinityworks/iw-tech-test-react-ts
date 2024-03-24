@@ -1,6 +1,7 @@
 import React from "react";
 import { EstablishmentsTableRow } from "./EstablishmentsTableRow";
 import PropTypes from "prop-types";
+import { TypeOfTable } from "../constants";
 
 const headerStyle: { [key: string]: string | number } = {
   paddingBottom: "10px",
@@ -10,13 +11,15 @@ const headerStyle: { [key: string]: string | number } = {
 
 export const EstablishmentsTable: React.FC<{
   establishments: { [key: string]: string }[] | null | undefined;
-}> = ({ establishments }) => {
+  type: TypeOfTable
+}> = ({ establishments, type }) => {
   return (
     <table>
       <tbody>
         <tr>
           <th style={headerStyle}>Business Name</th>
           <th style={headerStyle}>Rating Value</th>
+          <th style={headerStyle}>Favourite</th> 
         </tr>
         {establishments &&
           establishments?.map(
@@ -27,6 +30,7 @@ export const EstablishmentsTable: React.FC<{
               <EstablishmentsTableRow
                 key={index}
                 establishment={establishment}
+                typeOfTable={type}
               />
             )
           )}

@@ -4,12 +4,14 @@ import { EstablishmentsTableNavigation } from "./EstablishmentsTableNavigation";
 import {
   getAuthorities,
   getEstablishmentRatings,
-  AuthoritiesType,
   filterEstablishmentsByAuthority,
 } from "../api/ratingsAPI";
 import LoadingSpinner from "./LoadingSpinner";
 import Dropdown from "./DropdownFilter";
 import styles from "../styles/PaginatedEstablishmentsTable.module.css";
+import { TypeOfTable } from "../constants";
+import { useContext } from "react";
+import { FavouriteItemsContext } from "../context/favouriteItems";
 
 interface Option {
   label: string;
@@ -24,6 +26,7 @@ const tableStyle = {
 };
 
 export const PaginatedEstablishmentsTable = () => {
+  const favoritedEstablishments = useContext(FavouriteItemsContext);
   const [error, setError] = useState<{
     message: string;
     [key: string]: string;
@@ -52,6 +55,24 @@ export const PaginatedEstablishmentsTable = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+    const favouritedId = favoritedEstablishments?.favouriteItem?.map(
+      (element) => element.FHRSID
+    );
+    handleEstablisments(favouritedId)
+  }, [favoritedEstablishments]);
+
+  const handleEstablisments = (favouritedId: string[] | undefined) => {
+    const newEstablisments:{ [key: string]: string }[] = [...establishments];
+    for(const establishment of newEstablisments) {
+      if (favouritedId?.includes(establishment.FHRSID)) {
+        establishment.favourite = "1";
+      } else {
+        establishment.favourite = "0"; 
+      }
+    };
+    setEstablishments(newEstablisments);
+  }
   const handleAuthoritiesOptions = (
     authoritiesList: { [key: string]: string }[]
   ) => {
@@ -83,10 +104,11 @@ export const PaginatedEstablishmentsTable = () => {
       callApiFilterEstablishments(currentFilter, pageNum);
     }
   }
-  const handleValueChange = (value: string) => {
+  const handleChangeFilterAuthorities = (value: string) => {
     setLoading(true);
-    console.log("Selected value:", value);
     setCurrentFilter(value);
+    value === "all" ? 
+    callApiEstablishmentsRatings(pageNum) :
     callApiFilterEstablishments(value, pageNum);
   };
 
@@ -130,14 +152,17 @@ export const PaginatedEstablishmentsTable = () => {
           <span>Filter by authorities</span>
           <Dropdown
             options={authoritiesDropdownOptions}
-            onChange={handleValueChange}
+            onChange={handleChangeFilterAuthorities}
           />
         </div>
         {loading ? (
           <LoadingSpinner message="Loading..." />
         ) : (
           <div>
-            <EstablishmentsTable establishments={establishments} />
+            <EstablishmentsTable
+              type={TypeOfTable.Paginated}
+              establishments={establishments}
+            />
             <EstablishmentsTableNavigation
               pageNum={pageNum}
               pageCount={pageCount}
