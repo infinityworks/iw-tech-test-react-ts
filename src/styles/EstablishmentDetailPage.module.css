@@ -1,0 +1,11 @@
+ .detailTable { 
+  background-color: rgba(51, 51, 51, 0.9);
+  padding: 10px;
+  width: max-content;
+  margin: 65px 0px 0px 50px;
+  color: white;
+  }
+
+  .details {
+    font-size: 20px;
+  }

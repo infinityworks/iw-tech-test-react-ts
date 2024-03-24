@@ -1,0 +1,11 @@
+.tableRow {
+  font-size: 20px;
+}
+.link{
+  text-decoration: none;
+  color: inherit;
+}
+
+.buttonFavouriteTable {
+  padding: 6px 12px !important;
+}
